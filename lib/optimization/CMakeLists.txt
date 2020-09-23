@@ -1,0 +1,3 @@
+add_library(optimization STATIC optimization.cpp stop_criterion.cpp optimization_parameters.cpp)
+target_include_directories(optimization PUBLIC include)
+target_link_libraries(optimization PRIVATE)
