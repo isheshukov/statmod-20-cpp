@@ -1,38 +1,32 @@
+#pragma once
+
 #include "optimization_parameters.hpp"
 
+namespace Optimization {
 namespace StopCriterion {
+class OptimizationParameters;
 
-class AbstractCriterion {
-public:
-   virtual bool check(OptimizationParameters p) = 0;
-private:
+struct AbstractCriterion {
+    virtual bool check(OptimizationParameters p);
 };
 
-class PointDistance : AbstractCriterion{
-public:
-    bool check(OptimizationParameters p) {
-        return false;
-    }
+struct PointDistance : public AbstractCriterion{
+    virtual bool check(OptimizationParameters p) override;
 };
 
-class MaxIterations : AbstractCriterion{
-public:
-    MaxIterations(unsigned int N) : m_N(N) {}
-    bool check(OptimizationParameters p) {
-        return p.iteration_num < m_N;
-    }
+struct MaxIterations : public AbstractCriterion{
+    MaxIterations(unsigned int N);
+    virtual bool check(OptimizationParameters p) override;
 private:
     unsigned int m_N;
 };
 
-class MaxIterationsSinceImprovement : AbstractCriterion{
-public:
-    MaxIterationsSinceImprovement(unsigned int N) : m_N(N) {}
-    bool check(OptimizationParameters p) {
-        return (p.iteration_num - p.iteration_last_improvement_num) < m_N;
-    }
+struct MaxIterationsSinceImprovement : public AbstractCriterion{
+    MaxIterationsSinceImprovement(unsigned int N);
+    virtual bool check(OptimizationParameters p) override;
 private:
     unsigned int m_N;
 };
 
+}
 }
