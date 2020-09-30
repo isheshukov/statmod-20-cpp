@@ -25,20 +25,16 @@ public:
   {
     this->parameters = p;
   }
-  virtual void next() {}
+  virtual double next() {}
   std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
-
   std::shared_ptr<OptimizationParameters> parameters;
 };
 
 class NelderMead : public AbstractMethod
 {
-  std::vector<std::pair<Eigen::VectorXd, double>> simplex;
-  double initial_simplex_step = 1.0;
-
 public:
   NelderMead(std::shared_ptr<OptimizationParameters> p);
-  virtual void next() override;
+  virtual double next() override;
 };
 
 }

@@ -21,15 +21,19 @@ main(int argc, char* argv[])
   std::map<std::string, std::function<double(VectorXd)>> functions = {
     { "x^2", [](VectorXd x) { return x.norm(); } },
     { "x^3 + 5", [](VectorXd x) { return 4; } },
-    { "abs(log(x))", [](VectorXd x) { return x.norm(); } }
+    { "rosenbrock",
+      [](VectorXd x) {
+        return pow(1 - x[0], 2) + 100 * pow(x[1] - x[0] * x[0], 2);
+      } }
   };
 
   {
     auto stop_criterion =
-      std::make_unique<Optimization::StopCriterion::MaxIterations>(20);
+      std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
     auto parameters = std::make_shared<Optimization::OptimizationParameters>();
-    parameters->initial_point = Vector2d({ 2, 0.1 });
-    parameters->function = functions["x^2"];
+    parameters->initial_simplex_step = 1;
+    parameters->initial_point = Vector2d({ -1, -1 });
+    parameters->function = functions["rosenbrock"];
 
     auto method =
       std::make_unique<Optimization::Method::NelderMead>(parameters);

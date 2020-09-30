@@ -11,47 +11,51 @@ Optimization::Method::NelderMead::NelderMead(
   std::shared_ptr<OptimizationParameters> p)
   : Optimization::Method::AbstractMethod(p)
 {
-  simplex.push_back(std::pair<VectorXd, double>(p->initial_point,
-                                                p->function(p->initial_point)));
+  p->simplex.push_back(std::pair<VectorXd, double>(
+    p->initial_point, p->function(p->initial_point)));
 
   for (size_t i = 0; i < p->initial_point.size(); ++i) {
     auto next_point = p->initial_point;
-    next_point[i] += initial_simplex_step;
-    simplex.push_back(
+    next_point[i] += p->initial_simplex_step;
+    p->simplex.push_back(
       std::pair<VectorXd, double>(next_point, p->function(next_point)));
   }
+  parameters = p;
 };
 
-void
+double
 Optimization::Method::NelderMead::next()
 {
 
-  std::nth_element(simplex.begin(),
-                   simplex.begin() + 1,
-                   simplex.end(),
+  double alpha = 1;
+  double beta = 0.5;
+  double gamma = 2;
+
+  std::nth_element(parameters->simplex.begin(),
+                   parameters->simplex.begin() + 1,
+                   parameters->simplex.end(),
                    PairSecondCmp<VectorXd, double>());
-  auto g = simplex.begin() + 1;
+  auto g = parameters->simplex.begin() + 1;
 
-  auto [l, h] = std::minmax_element(
-    simplex.begin(), simplex.end(), PairSecondCmp<VectorXd, double>());
+  auto [l, h] = std::minmax_element(parameters->simplex.begin(),
+                                    parameters->simplex.end(),
+                                    PairSecondCmp<VectorXd, double>());
 
-  std::cout << l->second << " " << g->second << " " << h->second << std::endl;
+  // std::cout << l->second << " " << g->second << " " << h->second <<
+  // std::endl;
 
-  VectorXd centroid_x = VectorXd::Zero(simplex[0].first.size()).eval();
-  for (auto x : simplex) {
+  VectorXd centroid_x =
+    VectorXd::Zero(parameters->simplex[0].first.size()).eval();
+  for (auto x : parameters->simplex) {
     if (x.first == h->first)
       continue;
     centroid_x += x.first;
   }
-  centroid_x /= simplex.size();
-  std::cout << "Centroid = " << centroid_x << std::endl;
-
-  double alpha = 1;
-  double gamma = 2;
-  double beta = 0.5;
+  centroid_x /= parameters->simplex.size() - 1;
+  // std::cout << "Centroid = " << centroid_x << std::endl;
 
   auto r = std::pair<VectorXd, double>(
-    (1 + 1) * centroid_x - 1 * h->first,
+    (1 + alpha) * centroid_x - alpha * h->first,
     parameters->function((1 + alpha) * centroid_x - alpha * h->first));
 
   if (r.second < l->second) {
@@ -80,7 +84,7 @@ Optimization::Method::NelderMead::next()
     if (s.second < h->second) {
       *h = s;
     } else {
-      for (auto& x : simplex) {
+      for (auto& x : parameters->simplex) {
         if (x.first == l->first)
           continue;
         x.first = l->first + (x.first - l->first) / 2;
@@ -90,5 +94,9 @@ Optimization::Method::NelderMead::next()
   }
 
   parameters->iteration_num += 1;
-  std::cout << *parameters;
+  auto rr = *std::min_element(parameters->simplex.begin(),
+                              parameters->simplex.end(),
+                              PairSecondCmp<VectorXd, double>());
+  std::cout << rr.first << std::endl << std::endl;
+  return rr.second;
 };

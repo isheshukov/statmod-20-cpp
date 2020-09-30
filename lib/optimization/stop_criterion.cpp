@@ -1,11 +1,7 @@
+#include <Eigen/Dense>
 #include <stop_criterion.hpp>
 
-bool
-Optimization::StopCriterion::AbstractCriterion::check(
-  std::shared_ptr<OptimizationParameters> p)
-{
-  return false;
-}
+using namespace Eigen;
 
 bool
 Optimization::StopCriterion::PointDistance::check(
@@ -33,4 +29,26 @@ Optimization::StopCriterion::MaxIterationsSinceImprovement::check(
   std::shared_ptr<OptimizationParameters> p)
 {
   return (p->iteration_num - p->iteration_last_improvement_num) < m_N;
+}
+
+Optimization::StopCriterion::MinStdDeviation::MinStdDeviation(double eps)
+  : m_eps(eps)
+{}
+bool
+Optimization::StopCriterion::MinStdDeviation::check(
+  std::shared_ptr<OptimizationParameters> p)
+{
+  VectorXd values;
+  values.resize(p->simplex.size());
+  for (size_t i = 0; i < p->simplex.size(); ++i) {
+    values[i] = p->simplex[i].second;
+  }
+
+  std::cout << "std = "
+            << std::sqrt((values.array() - values.mean()).square().sum() /
+                         (values.size() - 1))
+            << std::endl;
+
+  return std::sqrt((values.array() - values.mean()).square().sum() /
+                   (values.size() - 1)) > m_eps;
 }
