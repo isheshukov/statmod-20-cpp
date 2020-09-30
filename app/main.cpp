@@ -1,6 +1,7 @@
 #ifdef GUI
 #include <QCoreApplication>
 #endif
+#include "argh.h"
 #include "optimization.hpp"
 #include <Eigen/Dense>
 #include <cmath>
@@ -9,6 +10,7 @@
 #include <iterator>
 #include <map>
 #include <memory>
+#include <unsupported/Eigen/MatrixFunctions>
 
 using namespace Eigen;
 
@@ -19,28 +21,45 @@ main(int argc, char* argv[])
   QCoreApplication a(argc, argv);
 #endif
   std::map<std::string, std::function<double(VectorXd)>> functions = {
-    { "x^2", [](VectorXd x) { return x.norm(); } },
-    { "x^3 + 5", [](VectorXd x) { return 4; } },
+    { "sphere", [](VectorXd x) { return std::pow(x.norm(), 2); } },
+    { "easom",
+      [](VectorXd x) {
+        auto xx = x.array() - M_PI;
+        return (-cos(x[0]) * cos(x[1]) * exp(-xx[0] * xx[0] - xx[1] * xx[1]));
+      } },
     { "rosenbrock",
       [](VectorXd x) {
         return pow(1 - x[0], 2) + 100 * pow(x[1] - x[0] * x[0], 2);
+      } },
+    { "rastrigin",
+      [](VectorXd x) {
+        auto x2 = x.array().pow(2) - 10 * cos(2 * M_PI * x.array());
+        return 10 * x.size() + x2.sum();
       } }
   };
 
-  {
-    auto stop_criterion =
-      std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
-    auto parameters = std::make_shared<Optimization::OptimizationParameters>();
-    parameters->initial_simplex_step = 1;
-    parameters->initial_point = Vector2d({ -1, -1 });
-    parameters->function = functions["rosenbrock"];
+  argh::parser cmdl(argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
+  std::string functionName = cmdl({ "-f", "--function" }, "sphere").str();
+  VectorXd initial_point = Vector2d({ 0, 0 });
 
-    auto method =
-      std::make_unique<Optimization::Method::NelderMead>(parameters);
+  auto stop_criterion =
+    std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
+  auto parameters = std::make_shared<Optimization::OptimizationParameters>();
 
-    Optimization::optimize(std::move(method), std::move(stop_criterion));
-    std::cout << *parameters << std::endl;
+  if (cmdl.pos_args().size() > 0) {
+    initial_point.resize(cmdl.pos_args().size() - 1);
+    for (size_t i = 1; i < cmdl.pos_args().size(); ++i)
+      initial_point[i - 1] = std::stod(cmdl[i]);
   }
+
+  parameters->initial_point = initial_point;
+
+  parameters->function = functions.at(functionName);
+
+  auto method = std::make_unique<Optimization::Method::NelderMead>(parameters);
+
+  Optimization::optimize(std::move(method), std::move(stop_criterion));
+  std::cout << *parameters << std::endl;
 
 #ifdef GUI
   return a.exec();

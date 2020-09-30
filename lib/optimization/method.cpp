@@ -93,6 +93,7 @@ Optimization::Method::NelderMead::next()
                               parameters->simplex.end(),
                               PairSecondCmp<VectorXd, double>());
   std::cout << rr.first << std::endl << std::endl;
+  std::cout << "f = " << rr.second << std::endl << std::endl;
   return rr.second;
 };
 

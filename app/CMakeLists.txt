@@ -21,4 +21,4 @@ endif()
 add_executable(nelder-mead
   main.cpp
 )
-target_link_libraries(nelder-mead Qt5::Core optimization)
+target_link_libraries(nelder-mead Qt5::Core optimization argh)
