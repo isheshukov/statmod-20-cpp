@@ -9,6 +9,7 @@ namespace StopCriterion {
 struct AbstractCriterion
 {
   virtual bool check(std::shared_ptr<OptimizationParameters> p) = 0;
+  virtual ~AbstractCriterion() {}
 };
 
 struct PointDistance : public AbstractCriterion

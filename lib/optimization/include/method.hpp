@@ -26,7 +26,8 @@ public:
   {
     this->parameters = p;
   }
-  virtual double next() {}
+  virtual ~AbstractMethod(){};
+  virtual double next() = 0;
   std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
   std::shared_ptr<OptimizationParameters> parameters;
 };

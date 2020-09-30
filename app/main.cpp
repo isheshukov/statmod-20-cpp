@@ -1,9 +1,8 @@
-#ifdef GUI
-#include <QCoreApplication>
-#endif
 #include "argh.h"
 #include "optimization.hpp"
 #include <Eigen/Dense>
+#include <QApplication>
+#include <QtWidgets>
 #include <cmath>
 #include <functional>
 #include <iostream>
@@ -17,9 +16,6 @@ using namespace Eigen;
 int
 main(int argc, char* argv[])
 {
-#ifdef GUI
-  QCoreApplication a(argc, argv);
-#endif
   std::map<std::string, std::function<double(VectorXd)>> functions = {
     { "sphere", [](VectorXd x) { return std::pow(x.norm(), 2); } },
     { "easom",
@@ -42,28 +38,34 @@ main(int argc, char* argv[])
   std::string functionName = cmdl({ "-f", "--function" }, "sphere").str();
   VectorXd initial_point = Vector2d({ 0, 0 });
 
-  auto stop_criterion =
-    std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
-  auto parameters = std::make_shared<Optimization::OptimizationParameters>();
+  if (!cmdl[{ "--gui" }]) {
+    auto stop_criterion =
+      std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
+    auto parameters = std::make_shared<Optimization::OptimizationParameters>();
 
-  if (cmdl.pos_args().size() > 0) {
-    initial_point.resize(cmdl.pos_args().size() - 1);
-    for (size_t i = 1; i < cmdl.pos_args().size(); ++i)
-      initial_point[i - 1] = std::stod(cmdl[i]);
+    if (cmdl.pos_args().size() > 0) {
+      initial_point.resize(cmdl.pos_args().size() - 1);
+      for (size_t i = 1; i < cmdl.pos_args().size(); ++i)
+        initial_point[i - 1] = std::stod(cmdl[i]);
+    }
+
+    parameters->initial_point = initial_point;
+
+    parameters->function = functions.at(functionName);
+
+    auto method =
+      std::make_unique<Optimization::Method::NelderMead>(parameters);
+
+    Optimization::optimize(std::move(method), std::move(stop_criterion));
+    std::cout << *parameters << std::endl;
+    return 0;
+  } else {
+    QApplication a(argc, argv);
+    QWidget window;
+    window.resize(320, 240);
+    window.show();
+    window.setWindowTitle(
+      QApplication::translate("toplevel", "C++ Multidimensional optimization"));
+    return a.exec();
   }
-
-  parameters->initial_point = initial_point;
-
-  parameters->function = functions.at(functionName);
-
-  auto method = std::make_unique<Optimization::Method::NelderMead>(parameters);
-
-  Optimization::optimize(std::move(method), std::move(stop_criterion));
-  std::cout << *parameters << std::endl;
-
-#ifdef GUI
-  return a.exec();
-#else
-  return 0;
-#endif
 }
