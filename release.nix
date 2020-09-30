@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 
 {guiOn ? false}:
-stdenv.mkDerivation rec {
+clangStdenv.mkDerivation rec {
   pname = "nelder-mead";
   version = "0.0.1";
   src = ./.;
@@ -11,6 +11,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [ 
+    eigen
     clang 
     qt5.full
   ];

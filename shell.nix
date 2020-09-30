@@ -7,6 +7,7 @@
       cmake
       clang-analyzer
       clang-tools
+      valgrind
     ];
 
     buildInputs = with pkgs; [
