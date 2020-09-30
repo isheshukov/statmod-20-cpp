@@ -8,16 +8,16 @@ clangStdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    pkg-config
   ];
 
   buildInputs = [ 
+    mesa
+    mesa_glu
     eigen
     clang 
     qt5.full
   ];
-
-  cmakeFlags = []
-   ++ stdenv.lib.optional guiOn "-DUSE_GUI=1";
 
   installPhase = ''
     mkdir -p $out
