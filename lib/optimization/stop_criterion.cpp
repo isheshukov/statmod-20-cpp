@@ -44,11 +44,6 @@ Optimization::StopCriterion::MinStdDeviation::check(
     values[i] = p->simplex[i].second;
   }
 
-  std::cout << "std = "
-            << std::sqrt((values.array() - values.mean()).square().sum() /
-                         (values.size() - 1))
-            << std::endl;
-
   return std::sqrt((values.array() - values.mean()).square().sum() /
                    (values.size() - 1)) > m_eps;
 }

@@ -11,14 +11,12 @@ Optimization::Method::NelderMead::NelderMead(
   std::shared_ptr<OptimizationParameters> p)
   : Optimization::Method::AbstractMethod(p)
 {
-  p->simplex.push_back(std::pair<VectorXd, double>(
-    p->initial_point, p->function(p->initial_point)));
+  p->simplex.push_back(createPoint(p->initial_point, parameters->function));
 
   for (size_t i = 0; i < p->initial_point.size(); ++i) {
     auto next_point = p->initial_point;
     next_point[i] += p->initial_simplex_step;
-    p->simplex.push_back(
-      std::pair<VectorXd, double>(next_point, p->function(next_point)));
+    p->simplex.push_back(createPoint(next_point, parameters->function));
   }
   parameters = p;
 };
@@ -54,14 +52,12 @@ Optimization::Method::NelderMead::next()
   centroid_x /= parameters->simplex.size() - 1;
   // std::cout << "Centroid = " << centroid_x << std::endl;
 
-  auto r = std::pair<VectorXd, double>(
-    (1 + alpha) * centroid_x - alpha * h->first,
-    parameters->function((1 + alpha) * centroid_x - alpha * h->first));
+  auto r = createPoint((1 + alpha) * centroid_x - alpha * h->first,
+                       parameters->function);
 
   if (r.second < l->second) {
-    auto e = std::pair<VectorXd, double>(
-      (1 - gamma) * centroid_x + gamma * r.first,
-      parameters->function((1 - gamma) * centroid_x + gamma * r.first));
+    auto e = createPoint((1 - gamma) * centroid_x + gamma * r.first,
+                         parameters->function);
 
     if (e.second < r.second) {
       *h = e;
@@ -77,9 +73,8 @@ Optimization::Method::NelderMead::next()
       // GOTO 6
     }
 
-    auto s = std::pair<VectorXd, double>(
-      beta * h->first + (1 - beta) * centroid_x,
-      parameters->function(beta * h->first + (1 - beta) * centroid_x));
+    auto s = createPoint(beta * h->first + (1 - beta) * centroid_x,
+                         parameters->function);
 
     if (s.second < h->second) {
       *h = s;
@@ -100,3 +95,11 @@ Optimization::Method::NelderMead::next()
   std::cout << rr.first << std::endl << std::endl;
   return rr.second;
 };
+
+PointVal
+Optimization::Method::NelderMead::createPoint(
+  Eigen::VectorXd v,
+  std::function<double(VectorXd)>& f)
+{
+  return PointVal(v, f(v));
+}
