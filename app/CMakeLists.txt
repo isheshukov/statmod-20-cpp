@@ -12,9 +12,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5Core)
-find_package(Qt5Widgets)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(nelder-mead
   main.cpp
+  mainwindow.cpp
 )
-target_link_libraries(nelder-mead Qt5::Core Qt5::Widgets optimization argh)
+target_link_libraries(nelder-mead Qt5::Widgets optimization argh)

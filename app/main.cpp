@@ -1,4 +1,5 @@
 #include "argh.h"
+#include "mainwindow.h"
 #include "optimization.hpp"
 #include <Eigen/Dense>
 #include <QApplication>
@@ -61,8 +62,7 @@ main(int argc, char* argv[])
     return 0;
   } else {
     QApplication a(argc, argv);
-    QWidget window;
-    window.resize(320, 240);
+    MainWindow window;
     window.show();
     window.setWindowTitle(
       QApplication::translate("toplevel", "C++ Multidimensional optimization"));
