@@ -39,9 +39,10 @@ Optimization::StopCriterion::MinStdDeviation::check(
   std::shared_ptr<OptimizationParameters> p)
 {
   VectorXd values;
-  values.resize(p->simplex.size());
-  for (size_t i = 0; i < p->simplex.size(); ++i) {
-    values[i] = p->simplex[i].second;
+  auto pp = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(p);
+  values.resize(pp->simplex.size());
+  for (size_t i = 0; i < pp->simplex.size(); ++i) {
+    values[i] = pp->simplex[i].second;
   }
 
   return std::sqrt((values.array() - values.mean()).square().sum() /

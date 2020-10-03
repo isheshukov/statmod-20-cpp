@@ -18,4 +18,4 @@ add_executable(nelder-mead
   main.cpp
   mainwindow.cpp
 )
-target_link_libraries(nelder-mead Qt5::Widgets optimization argh)
+target_link_libraries(nelder-mead Qt5::Widgets optimization argh mymath)

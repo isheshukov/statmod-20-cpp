@@ -2,6 +2,7 @@
 
 #include <Eigen/Dense>
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <memory>
 #include <numeric>
@@ -11,19 +12,26 @@ Optimization::Method::NelderMead::NelderMead(
   std::shared_ptr<OptimizationParameters> p)
   : Optimization::Method::AbstractMethod(p)
 {
-  p->simplex.push_back(createPoint(p->initial_point, parameters->function));
+  auto pp = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(p);
+  pp->simplex.push_back(createPoint(p->initial_point, parameters->function));
 
-  for (size_t i = 0; i < p->initial_point.size(); ++i) {
-    auto next_point = p->initial_point;
-    next_point[i] += p->initial_simplex_step;
-    p->simplex.push_back(createPoint(next_point, parameters->function));
+  for (size_t i = 0; i < pp->initial_point.size(); ++i) {
+    auto next_point = pp->initial_point;
+    next_point[i] += pp->initial_simplex_step;
+    pp->simplex.push_back(createPoint(next_point, parameters->function));
   }
-  parameters = p;
+  parameters = pp;
 };
 
 double
 Optimization::Method::NelderMead::next()
 {
+
+  auto parameters = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(
+    this->parameters);
+
+  if (!parameters)
+    exit(1);
 
   double alpha = 1;
   double beta = 0.5;
@@ -103,4 +111,17 @@ Optimization::Method::NelderMead::createPoint(
   std::function<double(VectorXd)>& f)
 {
   return PointVal(v, f(v));
+}
+
+Optimization::Method::RandomSearch::RandomSearch(
+  std::shared_ptr<OptimizationParameters> p)
+  : Optimization::Method::AbstractMethod(p)
+{
+  return;
+}
+
+double
+Optimization::Method::RandomSearch::next()
+{
+  return 0;
 }

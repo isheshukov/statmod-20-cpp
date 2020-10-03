@@ -1,5 +1,6 @@
 #include "argh.h"
 #include "mainwindow.h"
+#include "mymath.hpp"
 #include "optimization.hpp"
 #include <Eigen/Dense>
 #include <QApplication>
@@ -42,7 +43,8 @@ main(int argc, char* argv[])
   if (!cmdl[{ "--gui" }]) {
     auto stop_criterion =
       std::make_unique<Optimization::StopCriterion::MinStdDeviation>(1e-6);
-    auto parameters = std::make_shared<Optimization::OptimizationParameters>();
+    auto parameters =
+      std::make_shared<Optimization::NelderMeadOptimizationParameters>();
 
     if (cmdl.pos_args().size() > 0) {
       initial_point.resize(cmdl.pos_args().size() - 1);

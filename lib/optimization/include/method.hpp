@@ -42,5 +42,12 @@ private:
   PointVal createPoint(Eigen::VectorXd v, std::function<double(VectorXd)>& f);
 };
 
+class RandomSearch : public AbstractMethod
+{
+public:
+  RandomSearch(std::shared_ptr<OptimizationParameters> p);
+  virtual double next() override;
+};
+
 }
 }
