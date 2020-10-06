@@ -14,9 +14,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5Core)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
+QT5_WRAP_UI(QT_UIS_HDRS
+            mainwindow.ui)
+
 add_executable(nelder-mead
   main.cpp
   mainwindow.cpp
   cli.cpp
+  ${QT_UIS_HDRS}
 )
-target_link_libraries(nelder-mead Qt5::Widgets optimization structopt mymath)
+target_link_libraries(nelder-mead PUBLIC Qt5::Widgets optimization structopt mymath qcustomplot)
