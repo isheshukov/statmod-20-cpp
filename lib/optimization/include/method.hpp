@@ -4,10 +4,12 @@
 #include <algorithm>
 #include <iostream>
 #include <memory>
+#include <mymath.hpp>
 #include <numeric>
 #include <optimization_parameters.hpp>
 
-using PointVal = std::pair<Eigen::VectorXd, double>;
+using namespace MyMath;
+
 template<class U, class V>
 struct PairSecondCmp
 {
@@ -27,7 +29,7 @@ public:
     this->parameters = p;
   }
   virtual ~AbstractMethod(){};
-  virtual double next() = 0;
+  virtual PointVal next() = 0;
   std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
   std::shared_ptr<OptimizationParameters> parameters;
 };
@@ -36,17 +38,14 @@ class NelderMead : public AbstractMethod
 {
 public:
   NelderMead(std::shared_ptr<OptimizationParameters> p);
-  virtual double next() override;
-
-private:
-  PointVal createPoint(Eigen::VectorXd v, std::function<double(VectorXd)>& f);
+  virtual PointVal next() override;
 };
 
 class RandomSearch : public AbstractMethod
 {
 public:
   RandomSearch(std::shared_ptr<OptimizationParameters> p);
-  virtual double next() override;
+  virtual PointVal next() override;
 };
 
 }

@@ -1,5 +1,6 @@
 #include <method.hpp>
 
+#include "mymath.hpp"
 #include <Eigen/Dense>
 #include <algorithm>
 #include <cassert>
@@ -8,25 +9,29 @@
 #include <numeric>
 #include <optimization_parameters.hpp>
 
+std::random_device r;
+std::mt19937 eng(r());
+
+using namespace MyMath;
+
 Optimization::Method::NelderMead::NelderMead(
   std::shared_ptr<OptimizationParameters> p)
   : Optimization::Method::AbstractMethod(p)
 {
   auto pp = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(p);
-  pp->simplex.push_back(createPoint(p->initial_point, parameters->function));
+  pp->simplex.push_back(createPointVal(p->initial_point, parameters->function));
 
-  for (size_t i = 0; i < pp->initial_point.size(); ++i) {
+  for (long i = 0; i < pp->initial_point.size(); ++i) {
     auto next_point = pp->initial_point;
     next_point[i] += pp->initial_simplex_step;
-    pp->simplex.push_back(createPoint(next_point, parameters->function));
+    pp->simplex.push_back(createPointVal(next_point, parameters->function));
   }
   parameters = pp;
 };
 
-double
+PointVal
 Optimization::Method::NelderMead::next()
 {
-
   auto parameters = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(
     this->parameters);
 
@@ -47,9 +52,6 @@ Optimization::Method::NelderMead::next()
                                     parameters->simplex.end(),
                                     PairSecondCmp<VectorXd, double>());
 
-  // std::cout << l->second << " " << g->second << " " << h->second <<
-  // std::endl;
-
   VectorXd centroid_x =
     VectorXd::Zero(parameters->simplex[0].first.size()).eval();
   for (auto x : parameters->simplex) {
@@ -58,14 +60,13 @@ Optimization::Method::NelderMead::next()
     centroid_x += x.first;
   }
   centroid_x /= parameters->simplex.size() - 1;
-  // std::cout << "Centroid = " << centroid_x << std::endl;
 
-  auto r = createPoint((1 + alpha) * centroid_x - alpha * h->first,
-                       parameters->function);
+  auto r = createPointVal((1 + alpha) * centroid_x - alpha * h->first,
+                          parameters->function);
 
   if (r.second < l->second) {
-    auto e = createPoint((1 - gamma) * centroid_x + gamma * r.first,
-                         parameters->function);
+    auto e = createPointVal((1 - gamma) * centroid_x + gamma * r.first,
+                            parameters->function);
 
     if (e.second < r.second) {
       *h = e;
@@ -81,8 +82,8 @@ Optimization::Method::NelderMead::next()
       // GOTO 6
     }
 
-    auto s = createPoint(beta * h->first + (1 - beta) * centroid_x,
-                         parameters->function);
+    auto s = createPointVal(beta * h->first + (1 - beta) * centroid_x,
+                            parameters->function);
 
     if (s.second < h->second) {
       *h = s;
@@ -96,32 +97,46 @@ Optimization::Method::NelderMead::next()
     }
   }
 
-  parameters->iteration_num += 1;
   auto rr = *std::min_element(parameters->simplex.begin(),
                               parameters->simplex.end(),
                               PairSecondCmp<VectorXd, double>());
-  std::cout << rr.first << std::endl << std::endl;
-  std::cout << "f = " << rr.second << std::endl << std::endl;
-  return rr.second;
+  return rr;
 };
-
-PointVal
-Optimization::Method::NelderMead::createPoint(
-  Eigen::VectorXd v,
-  std::function<double(VectorXd)>& f)
-{
-  return PointVal(v, f(v));
-}
 
 Optimization::Method::RandomSearch::RandomSearch(
   std::shared_ptr<OptimizationParameters> p)
   : Optimization::Method::AbstractMethod(p)
 {
-  return;
+  auto pp = std::dynamic_pointer_cast<RandomSearchOptimizationParameters>(p);
+  parameters = pp;
 }
 
-double
+PointVal
 Optimization::Method::RandomSearch::next()
 {
-  return 0;
+  auto parameters =
+    std::dynamic_pointer_cast<RandomSearchOptimizationParameters>(
+      this->parameters);
+
+  auto bernoulli_dist = std::bernoulli_distribution(parameters->p);
+  Box search_space;
+  PointVal candidate;
+  double new_delta = parameters->delta;
+
+  if (bernoulli_dist(eng)) {
+    search_space = parameters->search_space;
+  } else {
+    search_space = Box(parameters->current_best.first, parameters->delta) &
+                   parameters->search_space;
+    new_delta = parameters->alpha * parameters->delta;
+  }
+  candidate =
+    createPointVal(MyMath::sample(search_space, eng), parameters->function);
+
+  if (candidate.second < parameters->current_best.second) {
+    parameters->current_best = candidate;
+    parameters->delta = new_delta;
+  }
+
+  return parameters->current_best;
 }

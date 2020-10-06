@@ -14,10 +14,17 @@
 #include <unsupported/Eigen/MatrixFunctions>
 
 using namespace Eigen;
+using namespace MyMath;
 
 int
 main(int argc, char* argv[])
 {
+  argh::parser cmdl(argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
+  std::string functionName = cmdl({ "-f", "--function" }, "easom").str();
+  std::string methodName = cmdl({ "-m", "--method" }, "neldermead").str();
+  std::string criterionName =
+    cmdl({ "-s", "--stop-criterion" }, "maxiterations").str();
+
   std::map<std::string, std::function<double(VectorXd)>> functions = {
     { "sphere", [](VectorXd x) { return std::pow(x.norm(), 2); } },
     { "easom",
@@ -36,9 +43,7 @@ main(int argc, char* argv[])
       } }
   };
 
-  argh::parser cmdl(argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
-  std::string functionName = cmdl({ "-f", "--function" }, "sphere").str();
-  VectorXd initial_point = Vector2d({ 0, 0 });
+  VectorXd initial_point = Vector2d({ 3, 3 });
 
   if (!cmdl[{ "--gui" }]) {
     auto stop_criterion =
@@ -53,6 +58,12 @@ main(int argc, char* argv[])
     }
 
     parameters->initial_point = initial_point;
+    parameters->function = functions.at(functionName);
+    parameters->current_best =
+      createPointVal(Vector2d({ 10, 10 }), parameters->function);
+    parameters->initial_point = Vector2d({ 10, 10 });
+    parameters->search_space = Box(initial_point, 4);
+    // parameters->p = 0.95;
 
     parameters->function = functions.at(functionName);
 
@@ -70,4 +81,6 @@ main(int argc, char* argv[])
       QApplication::translate("toplevel", "C++ Multidimensional optimization"));
     return a.exec();
   }
+
+  return 0;
 }
