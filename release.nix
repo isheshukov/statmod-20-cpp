@@ -16,7 +16,7 @@ clangStdenv.mkDerivation rec {
     mesa_glu
     eigen
     clang 
-    qt5.full
+    qt514.full
   ];
 
   installPhase = ''
