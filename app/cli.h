@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Eigen/Dense>
+#include <QtCore>
 #include <functional>
 #include <map>
 #include <optional>
@@ -9,6 +10,7 @@
 
 struct Options
 {
+public:
   enum class StopCriterion
   {
     min_std_dev,
