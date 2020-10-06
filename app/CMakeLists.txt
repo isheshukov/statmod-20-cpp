@@ -17,5 +17,6 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 add_executable(nelder-mead
   main.cpp
   mainwindow.cpp
+  cli.cpp
 )
-target_link_libraries(nelder-mead Qt5::Widgets optimization argh mymath)
+target_link_libraries(nelder-mead Qt5::Widgets optimization structopt mymath)

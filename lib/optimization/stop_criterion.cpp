@@ -28,7 +28,7 @@ bool
 Optimization::StopCriterion::MaxIterationsSinceImprovement::check(
   const OptimizationState& p) const
 {
-  return (p.iteration_num - p.iteration_num_since_last_improvement) < m_N;
+  return (p.iteration_num - p.iteration_no_improv) < m_N;
 }
 
 Optimization::StopCriterion::MinStdDeviation::MinStdDeviation(double eps)

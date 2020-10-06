@@ -40,8 +40,7 @@ struct RandomSearchOptimizationParameters : public OptimizationParameters
 struct OptimizationState
 {
   size_t iteration_num = 0;
-  size_t iteration_num_since_last_improvement =
-    std::numeric_limits<size_t>::max();
+  size_t iteration_no_improv = std::numeric_limits<size_t>::max();
   std::vector<PointVal> point_history;
   std::shared_ptr<OptimizationParameters> method_parameters;
 };
@@ -50,3 +49,6 @@ struct OptimizationState
 
 std::ostream&
 operator<<(std::ostream& os, const Optimization::OptimizationParameters& p);
+
+std::ostream&
+operator<<(std::ostream& os, const Optimization::OptimizationState& p);

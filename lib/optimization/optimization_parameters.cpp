@@ -3,14 +3,11 @@
 std::ostream&
 operator<<(std::ostream& os, const Optimization::OptimizationState& p)
 {
-  os << "num=" << p.iteration_num
-     << ", last improv num=" << p.iteration_num_since_last_improvement
-     << ", current_point=(";
+  os << "# of iterations:                 " << p.iteration_num << "\n"
+     << "# of iterations w/o improvement: " << p.iteration_no_improv << "\n"
+     << "Result: " << p.point_history.back();
 
-  // for (size_t i = 0; i < p.point_history.back().size(); ++i ) {
-  //    os << p.point_history.back()[i] << ", ";
-  //}
-  return os << ")" << std::endl;
+  return os;
 }
 
 std::ostream&

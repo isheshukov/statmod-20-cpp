@@ -3,7 +3,7 @@
 #include <stop_criterion.hpp>
 
 namespace Optimization {
-PointVal
+OptimizationState
 optimize(
   std::unique_ptr<Optimization::Method::AbstractMethod> method,
   std::unique_ptr<Optimization::StopCriterion::AbstractCriterion> criterion)
@@ -13,9 +13,14 @@ optimize(
   do {
     state.point_history.push_back(method->next());
     state.iteration_num++;
-    std::cout << state.point_history.back() << std::endl;
+    state.iteration_no_improv++;
+    state.point_history.back();
+
+    if (state.point_history.back().second <
+        (state.point_history.end() - 2)->second)
+      state.iteration_no_improv = 0;
   } while (criterion->check(state));
 
-  return state.point_history.back();
+  return state;
 }
 }

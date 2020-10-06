@@ -4,7 +4,7 @@
 #include <memory>
 
 namespace Optimization {
-PointVal
+OptimizationState
 optimize(
   std::unique_ptr<Optimization::Method::AbstractMethod> method,
   std::unique_ptr<Optimization::StopCriterion::AbstractCriterion> criterion);
