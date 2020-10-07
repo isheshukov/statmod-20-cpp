@@ -1,9 +1,9 @@
-#include "cli.h"
+#include "run.hpp"
 #include <memory>
 #include <optimization.hpp>
 
-void
-cli::cli(Options options)
+Optimization::OptimizationState
+run::run(Options options)
 {
   std::unique_ptr<Optimization::StopCriterion::AbstractCriterion>
     stop_criterion;
@@ -42,11 +42,11 @@ cli::cli(Options options)
   VectorXd point =
     VectorXd::Map(options.initial_point.data(), options.initial_point.size());
 
-  parameters->initial_point = point;
   parameters->function = functions.at(options.function.value());
-  parameters->current_best =
-    createPointVal(parameters->initial_point, parameters->function);
-  parameters->search_space = Box(parameters->initial_point, 100);
+
+  parameters->initial_point = point;
+  parameters->current_best = createPointVal(point, parameters->function);
+  parameters->search_space = Box(point, 10);
 
   std::unique_ptr<Optimization::Method::AbstractMethod> method;
 
@@ -59,7 +59,5 @@ cli::cli(Options options)
       break;
   }
 
-  std::cout << Optimization::optimize(std::move(method),
-                                      std::move(stop_criterion))
-            << std::endl;
+  return Optimization::optimize(std::move(method), std::move(stop_criterion));
 }

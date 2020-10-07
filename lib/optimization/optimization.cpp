@@ -10,11 +10,14 @@ optimize(
 {
   OptimizationState state;
   state.method_parameters = method->getParameters();
+  state.point_history.push_back(state.method_parameters->current_best);
+  state.point_history.push_back(state.method_parameters->current_best);
+  state.point_history.push_back(state.method_parameters->current_best);
+  state.point_history.push_back(state.method_parameters->current_best);
   do {
     state.point_history.push_back(method->next());
     state.iteration_num++;
     state.iteration_no_improv++;
-    state.point_history.back();
 
     if (state.point_history.back().second <
         (state.point_history.end() - 2)->second)

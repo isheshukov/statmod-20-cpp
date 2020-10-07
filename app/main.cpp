@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QtWidgets>
-#include <cli.h>
 #include <iostream>
+#include <run.hpp>
 #include <structopt/app.hpp>
 
 int
@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     }
 
     if (!options.gui.value()) {
-      cli::cli(options);
+      std::cout << run::run(options) << std::endl;
       return 0;
     } else {
       QApplication a(argc, argv);

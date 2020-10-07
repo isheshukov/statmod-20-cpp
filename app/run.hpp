@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <functional>
 #include <map>
+#include <optimization_parameters.hpp>
 #include <optional>
 #include <structopt/app.hpp>
 #include <vector>
@@ -77,7 +78,7 @@ static std::map<Options::FunctionName,
                    return 10 * x.size() + x2.sum();
                  } } };
 
-namespace cli {
-void
-cli(Options options);
+namespace run {
+Optimization::OptimizationState
+run(Options options);
 }

@@ -19,7 +19,7 @@ QT5_WRAP_UI(QT_UIS_HDRS
 add_executable(nelder-mead
   main.cpp
   mainwindow.cpp
-  cli.cpp
+  run.cpp
   ${QT_UIS_HDRS}
 )
 target_link_libraries(nelder-mead PUBLIC Qt5::Widgets optimization structopt mymath qcustomplot)

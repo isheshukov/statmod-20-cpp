@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "run.hpp"
 #include <QMainWindow>
 #include <QMap>
 #include <QString>
-#include <cli.h>
 #include <qcustomplot.h>
 
 namespace Ui {
@@ -23,6 +23,7 @@ private slots:
   void on_actionExit_triggered();
 
   void on_function_comboBox_currentIndexChanged(QString value);
+  void on_plot_click(QMouseEvent* event);
 
 private:
   Ui::MainWindow* ui;

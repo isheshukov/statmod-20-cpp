@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "cli.h"
+#include "run.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -37,6 +37,17 @@ MainWindow::MainWindow(QWidget* parent)
   ui->plot->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, marginGroup);
   colorScale->setMarginGroup(QCP::msBottom | QCP::msTop, marginGroup);
 
+  QObject::connect(
+    ui->plot, &QCustomPlot::mousePress, this, &MainWindow::on_plot_click);
+
+  ui->plot->addLayer("points", ui->plot->layer("main"), QCustomPlot::limAbove);
+  ui->plot->layer("points")->setMode(QCPLayer::lmBuffered);
+  ui->plot->setCurrentLayer("points");
+  ui->plot->addGraph();
+
+  ui->plot->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
+  ui->plot->graph(0)->setPen(QPen(QBrush(Qt::red), 2));
+
   ui->method_comboBox->addItems(QStringList(methodOptions->keys()));
   // ui->method_comboBox->setCurrentIndex(0);
 
@@ -58,6 +69,8 @@ MainWindow::on_actionExit_triggered()
 void
 MainWindow::on_function_comboBox_currentIndexChanged(QString value)
 {
+  ui->plot->setCurrentLayer("points");
+  ui->plot->graph(0)->data().data()->clear();
 
   int nx = 400;
   int ny = 400;
@@ -75,5 +88,34 @@ MainWindow::on_function_comboBox_currentIndexChanged(QString value)
   colorMap->rescaleValueAxis();
 
   ui->plot->rescaleAxes();
+  ui->plot->replot();
+}
+
+void
+MainWindow::on_plot_click(QMouseEvent* event)
+{
+  double x = colorMap->keyAxis()->pixelToCoord(event->pos().x());
+  double y = colorMap->valueAxis()->pixelToCoord(event->pos().y());
+
+  Options opts;
+  opts.stop_criterion = Options::StopCriterion::num_iterations;
+  opts.method = methodOptions->value(ui->method_comboBox->currentText());
+  opts.function = functionOptions->value(ui->function_comboBox->currentText());
+  opts.initial_point = { x, y };
+
+  std::cout << "x = " << opts.initial_point[0]
+            << "y = " << opts.initial_point[1] << std::endl;
+
+  auto opt_result = run::run(opts);
+
+  ui->plot->setCurrentLayer("points");
+  ui->plot->graph(0)->data().data()->clear();
+  for (auto& p : opt_result.point_history) {
+    // std::cout << "x = " << p.first[0] << "y = " << p.first[1] << std::endl;
+    ui->plot->graph(0)->addData(p.first[0], p.first[1]);
+  }
+
+  std::cout << opt_result << std::endl;
+
   ui->plot->replot();
 }
