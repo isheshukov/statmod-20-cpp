@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "run.hpp"
 #include "ui_mainwindow.h"
+#include <exception>
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
@@ -9,6 +10,7 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
   methodOptions = new QMap<QString, Options::Method>;
   functionOptions = new QMap<QString, Options::FunctionName>;
+  stopCriterionOptions = new QMap<QString, Options::StopCriterion>;
 
   methodOptions->insert("Random search", Options::Method::random);
   methodOptions->insert("Nelder-Mead", Options::Method::nelder_mead);
@@ -17,6 +19,11 @@ MainWindow::MainWindow(QWidget* parent)
   functionOptions->insert("Easom", Options::FunctionName::easom);
   functionOptions->insert("Rastrigin", Options::FunctionName::rastrigin);
   functionOptions->insert("Rosenbrock", Options::FunctionName::rosenbrock);
+
+  stopCriterionOptions->insert("Minimum standard deviation",
+                               Options::StopCriterion::min_std_dev);
+  stopCriterionOptions->insert("Maximum iterations",
+                               Options::StopCriterion::num_iterations);
 
   ui->plot->axisRect()->setupFullAxesBox(true);
   ui->plot->xAxis->setLabel("x");
@@ -49,15 +56,14 @@ MainWindow::MainWindow(QWidget* parent)
   ui->plot->graph(0)->setPen(QPen(QBrush(Qt::red), 2));
 
   ui->method_comboBox->addItems(QStringList(methodOptions->keys()));
-  // ui->method_comboBox->setCurrentIndex(0);
-
   ui->function_comboBox->addItems(QStringList(functionOptions->keys()));
-  // ui->function_comboBox->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+  delete methodOptions;
+  delete functionOptions;
 }
 
 void
@@ -98,24 +104,63 @@ MainWindow::on_plot_click(QMouseEvent* event)
   double y = colorMap->valueAxis()->pixelToCoord(event->pos().y());
 
   Options opts;
-  opts.stop_criterion = Options::StopCriterion::num_iterations;
   opts.method = methodOptions->value(ui->method_comboBox->currentText());
   opts.function = functionOptions->value(ui->function_comboBox->currentText());
-  opts.initial_point = { x, y };
+  opts.stop_criterion =
+    stopCriterionOptions->value(ui->stopCriterion_comboBox->currentText());
 
-  std::cout << "x = " << opts.initial_point[0]
-            << "y = " << opts.initial_point[1] << std::endl;
+  opts.initial_point = { x, y };
+  opts.max_iterations = ui->maxIterations_spinBox->value();
+  opts.eps = ui->eps_doubleSpinBox->value();
+  opts.explore_probability = ui->p_doubleSpinBox->value();
+  opts.delta = ui->delta_doubleSpinBox->value();
+  opts.alpha = ui->alpha_doubleSpinBox->value();
+  opts.initial_simplex_step = ui->simplexInitStep_doubleSpinBox->value();
+  opts.xStart = ui->xStart_doubleSpinBox->value();
+  opts.xEnd = ui->xEnd_doubleSpinBox->value();
+  opts.yStart = ui->yStart_doubleSpinBox->value();
+  opts.yEnd = ui->yEnd_doubleSpinBox->value();
 
   auto opt_result = run::run(opts);
-
   ui->plot->setCurrentLayer("points");
   ui->plot->graph(0)->data().data()->clear();
   for (auto& p : opt_result.point_history) {
-    // std::cout << "x = " << p.first[0] << "y = " << p.first[1] << std::endl;
     ui->plot->graph(0)->addData(p.first[0], p.first[1]);
   }
 
-  std::cout << opt_result << std::endl;
+  std::stringstream ss;
+  ss << "Result: (";
+  ss << opt_result.point_history.back().first.transpose() << "), ";
+  ss << "f = " << opt_result.point_history.back().second;
+
+  auto status_text = QString::fromStdString(ss.str());
+  ui->statusbar->showMessage(status_text);
 
   ui->plot->replot();
+}
+
+void
+MainWindow::on_stopCriterion_comboBox_currentIndexChanged(const QString& arg1)
+{
+  if (arg1.compare("Maximum iterations") == 0) {
+    ui->eps_doubleSpinBox->setEnabled(false);
+  } else {
+    ui->eps_doubleSpinBox->setEnabled(true);
+  }
+
+  ui->statusbar->clearMessage();
+  ui->plot->blockSignals(false);
+}
+
+void
+MainWindow::on_method_comboBox_currentIndexChanged(const QString& arg1)
+{
+  ui->stopCriterion_comboBox->clear();
+  ui->stopCriterion_comboBox->addItems(
+    QStringList(stopCriterionOptions->keys()));
+
+  if (arg1.compare("Random search") == 0) {
+    ui->stopCriterion_comboBox->removeItem(
+      ui->stopCriterion_comboBox->findText("Minimum standard deviation"));
+  }
 }

@@ -23,6 +23,14 @@ public:
   std::optional<size_t> max_iterations = 100;
   std::optional<double> explore_probability = 0.7;
   std::optional<double> eps = 1e-6;
+  std::optional<double> p = 0.5;
+  std::optional<double> delta = 1;
+  std::optional<double> alpha = 0.5;
+  std::optional<double> initial_simplex_step = 1.0;
+  std::optional<double> xStart = 0;
+  std::optional<double> xEnd = 1.0;
+  std::optional<double> yStart = 0;
+  std::optional<double> yEnd = 1.0;
 
   enum class Method
   {
@@ -49,6 +57,14 @@ STRUCTOPT(Options,
           max_iterations,
           explore_probability,
           eps,
+          p,
+          delta,
+          alpha,
+          initial_simplex_step,
+          xStart,
+          xEnd,
+          yStart,
+          yEnd,
           method,
           function,
           initial_point);

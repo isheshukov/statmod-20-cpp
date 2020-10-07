@@ -37,11 +37,12 @@ private:
 
 struct MinStdDeviation : public AbstractCriterion
 {
-  MinStdDeviation(double eps);
+  MinStdDeviation(double eps, unsigned int N);
   bool check(const OptimizationState& p) const;
 
 private:
   double m_eps;
+  unsigned int m_N;
 };
 
 }

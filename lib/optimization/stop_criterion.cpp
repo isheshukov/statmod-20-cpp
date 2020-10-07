@@ -31,8 +31,10 @@ Optimization::StopCriterion::MaxIterationsSinceImprovement::check(
   return (p.iteration_num - p.iteration_no_improv) < m_N;
 }
 
-Optimization::StopCriterion::MinStdDeviation::MinStdDeviation(double eps)
+Optimization::StopCriterion::MinStdDeviation::MinStdDeviation(double eps,
+                                                              unsigned int N)
   : m_eps(eps)
+  , m_N(N)
 {}
 bool
 Optimization::StopCriterion::MinStdDeviation::check(
@@ -46,6 +48,7 @@ Optimization::StopCriterion::MinStdDeviation::check(
     values[i] = pp->simplex[i].second;
   }
 
-  return std::sqrt((values.array() - values.mean()).square().sum() /
-                   (values.size() - 1)) > m_eps;
+  return (std::sqrt((values.array() - values.mean()).square().sum() /
+                    (values.size() - 1)) > m_eps) &&
+         (p.iteration_num < m_N);
 }

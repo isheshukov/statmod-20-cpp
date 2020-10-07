@@ -25,10 +25,16 @@ private slots:
   void on_function_comboBox_currentIndexChanged(QString value);
   void on_plot_click(QMouseEvent* event);
 
+  void on_stopCriterion_comboBox_currentIndexChanged(const QString& arg1);
+
+  void on_method_comboBox_currentIndexChanged(const QString& arg1);
+
 private:
   Ui::MainWindow* ui;
   QMap<QString, Options::Method>* methodOptions;
   QMap<QString, Options::FunctionName>* functionOptions;
+  QMap<QString, Options::StopCriterion>* stopCriterionOptions;
+
   QCPMarginGroup* marginGroup;
   QCPColorScale* colorScale;
   QCPColorMap* colorMap;

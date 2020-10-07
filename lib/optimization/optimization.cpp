@@ -11,9 +11,6 @@ optimize(
   OptimizationState state;
   state.method_parameters = method->getParameters();
   state.point_history.push_back(state.method_parameters->current_best);
-  state.point_history.push_back(state.method_parameters->current_best);
-  state.point_history.push_back(state.method_parameters->current_best);
-  state.point_history.push_back(state.method_parameters->current_best);
   do {
     state.point_history.push_back(method->next());
     state.iteration_num++;
