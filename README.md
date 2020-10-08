@@ -3,8 +3,9 @@
 ## Compilation
 
 ```sh
-mkdir build
-cd build
+git clone --recurse-submodules https://github.com/isheshukov/statmod-20-cpp.git
+mkdir statmod-20-cpp/build
+cd statmod-20-cpp/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ./app/nelder-mead
