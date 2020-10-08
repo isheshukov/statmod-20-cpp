@@ -158,9 +158,28 @@ MainWindow::on_method_comboBox_currentIndexChanged(const QString& arg1)
   ui->stopCriterion_comboBox->clear();
   ui->stopCriterion_comboBox->addItems(
     QStringList(stopCriterionOptions->keys()));
+  ui->simplexInitStep_doubleSpinBox->show();
+  ui->alpha_doubleSpinBox->show();
+  ui->delta_doubleSpinBox->show();
+  ui->p_doubleSpinBox->show();
+  ui->label_6->show();
+  ui->label_7->show();
+  ui->label_8->show();
+  ui->label_9->show();
 
   if (arg1.compare("Random search") == 0) {
     ui->stopCriterion_comboBox->removeItem(
       ui->stopCriterion_comboBox->findText("Minimum standard deviation"));
+    ui->simplexInitStep_doubleSpinBox->hide();
+    ui->label_6->hide();
+  }
+
+  if (arg1.compare("Nelder-Mead") == 0) {
+    ui->alpha_doubleSpinBox->hide();
+    ui->delta_doubleSpinBox->hide();
+    ui->p_doubleSpinBox->hide();
+    ui->label_7->hide();
+    ui->label_8->hide();
+    ui->label_9->hide();
   }
 }

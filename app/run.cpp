@@ -10,11 +10,13 @@ run::run(Options options)
     stop_criterion;
 
   switch (options.stop_criterion.value()) {
+
     case Options::StopCriterion::min_std_dev:
       stop_criterion =
         std::make_unique<Optimization::StopCriterion::MinStdDeviation>(
           options.eps.value(), options.max_iterations.value());
       break;
+
     case Options::StopCriterion::num_iterations:
       stop_criterion =
         std::make_unique<Optimization::StopCriterion::MaxIterations>(
@@ -25,6 +27,7 @@ run::run(Options options)
   std::shared_ptr<Optimization::OptimizationParameters> parameters;
 
   switch (options.method.value()) {
+
     case Options::Method::nelder_mead: {
       parameters =
         std::make_shared<Optimization::NelderMeadOptimizationParameters>();
@@ -33,6 +36,7 @@ run::run(Options options)
       pn->initial_simplex_step = options.initial_simplex_step.value();
       break;
     }
+
     case Options::Method::random: {
       parameters =
         std::make_shared<Optimization::RandomSearchOptimizationParameters>();
@@ -50,7 +54,6 @@ run::run(Options options)
     VectorXd::Map(options.initial_point.data(), options.initial_point.size());
 
   parameters->function = functions.at(options.function.value());
-
   parameters->initial_point = point;
   parameters->current_best = createPointVal(point, parameters->function);
   std::vector<std::pair<double, double>> search_space = {
