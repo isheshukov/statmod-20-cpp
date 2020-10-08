@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget* parent)
   functionOptions->insert("Easom", Options::FunctionName::easom);
   functionOptions->insert("Rastrigin", Options::FunctionName::rastrigin);
   functionOptions->insert("Rosenbrock", Options::FunctionName::rosenbrock);
+  functionOptions->insert("Himmelblau", Options::FunctionName::himmelblau);
 
   stopCriterionOptions->insert("Minimum standard deviation",
                                Options::StopCriterion::min_std_dev);
@@ -32,8 +33,8 @@ MainWindow::MainWindow(QWidget* parent)
   colorMap = new QCPColorMap(ui->plot->xAxis, ui->plot->yAxis);
   colorScale = new QCPColorScale(ui->plot);
   marginGroup = new QCPMarginGroup(ui->plot);
-  int nx = 400;
-  int ny = 400;
+  int nx = 500;
+  int ny = 500;
   colorMap->data()->setSize(nx, ny);
   colorMap->data()->setRange(QCPRange(-10, 10), QCPRange(-10, 10));
   ui->plot->plotLayout()->addElement(0, 1, colorScale);
@@ -78,8 +79,8 @@ MainWindow::on_function_comboBox_currentIndexChanged(QString value)
   ui->plot->setCurrentLayer("points");
   ui->plot->graph(0)->data().data()->clear();
 
-  int nx = 400;
-  int ny = 400;
+  int nx = 500;
+  int ny = 500;
 
   double x, y, z;
   for (int xIndex = 0; xIndex < nx; ++xIndex) {

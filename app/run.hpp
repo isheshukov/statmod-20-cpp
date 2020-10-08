@@ -44,7 +44,8 @@ public:
     sphere,
     easom,
     rosenbrock,
-    rastrigin
+    rastrigin,
+    himmelblau
   };
   std::optional<FunctionName> function = FunctionName::sphere;
 
@@ -89,9 +90,16 @@ static std::map<Options::FunctionName,
                     auto y = _x.array().head(n - 1);
                     return (pow(1 - y, 2) + 100 * pow(x - y * y, 2)).sum();
                   } },
-                { Options::FunctionName::rastrigin, [](VectorXd x) {
-                   auto x2 = x.array().pow(2) - 10 * cos(2 * M_PI * x.array());
-                   return 10 * x.size() + x2.sum();
+                { Options::FunctionName::rastrigin,
+                  [](VectorXd x) {
+                    auto x2 = x.array().pow(2) - 10 * cos(2 * M_PI * x.array());
+                    return 10 * x.size() + x2.sum();
+                  } },
+                { Options::FunctionName::himmelblau, [](VectorXd _x) {
+                   auto x = _x[0];
+                   auto y = _x[1];
+                   return std::pow(x * x + y - 11, 2) +
+                          std::pow(x + y * y - 7, 2);
                  } } };
 
 namespace run {

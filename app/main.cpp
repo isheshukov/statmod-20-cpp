@@ -12,9 +12,10 @@ main(int argc, char* argv[])
     auto options =
       structopt::app("optimization_methods").parse<Options>(argc, argv);
 
-    if (options.function == Options::FunctionName::easom &&
+    if (((options.function == Options::FunctionName::easom) ||
+         (options.function == Options::FunctionName::himmelblau)) &&
         options.initial_point.size() > 2) {
-      std::cerr << "Error: Easom is a 2D function" << std::endl;
+      std::cerr << "Error: This is a 2D function" << std::endl;
       exit(1);
     }
 
