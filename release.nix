@@ -14,7 +14,6 @@ clangStdenv.mkDerivation rec {
   buildInputs = [ 
     mesa
     mesa_glu
-    eigen
     clang 
     qt514.full
   ];
