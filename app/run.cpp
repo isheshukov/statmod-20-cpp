@@ -60,7 +60,8 @@ run::run(Options options)
     std::pair<double, double>(options.xStart.value(), options.xEnd.value()),
     std::pair<double, double>(options.yStart.value(), options.yEnd.value())
   };
-  parameters->search_space = search_space;
+  parameters->search_space =
+    (point.size() == 2) ? search_space : Box(point, 10);
 
   std::unique_ptr<Optimization::Method::AbstractMethod> method;
 
