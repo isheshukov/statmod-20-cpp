@@ -9,6 +9,7 @@ clangStdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     pkg-config
+    doxygen
   ];
 
   buildInputs = [ 

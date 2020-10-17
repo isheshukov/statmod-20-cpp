@@ -12,3 +12,7 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
     - run: git submodule update --init --recursive
     - run: nix-build release.nix
+    - uses: actions/upload-artifact@v2
+      with:
+        name: artifact
+        path: result/nelder-mead
