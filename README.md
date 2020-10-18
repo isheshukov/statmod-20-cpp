@@ -1,5 +1,7 @@
 # Optimization Methods
 
+[Documentation](https://isheshukov.github.io/statmod-20-cpp/index.html)
+
 ## Compilation
 
 ```sh
