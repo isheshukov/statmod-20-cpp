@@ -7,9 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v11
+    - name: Cache install Nix packages
+      uses: nix-actions/cache-install@v1.0.6
       with:
-        nix_path: nixpkgs=channel:nixos-unstable
+        key: nix-${{ hashFiles('mypackages.nix') }}
+        nix_file: 'mypackages.nix'
     - run: git submodule update --init --recursive
     - run: nix-build release.nix
     - uses: actions/upload-artifact@v2
