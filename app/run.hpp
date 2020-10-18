@@ -27,15 +27,21 @@ public:
 
   std::optional<bool> gui = false; ///< If set starts program in GUI mode
   std::optional<size_t> max_iterations = 100; ///< Maximum number of iterations.
+
+  /** @name Random search options
+   */
+  ///@{
   std::optional<double> explore_probability =
     0.7; ///< Probability of exploration in random search
+  std::optional<double> delta = 1; ///< Initial ball radius
+  std::optional<double> alpha = 0.5; ///< Radius shrink coefficient
+  ///@}
+  
   std::optional<double> eps = 1e-6;
-  std::optional<double> delta = 1;
-  std::optional<double> alpha = 0.5;
   std::optional<double> initial_simplex_step = 1.0;
 
   /** @name Search space
-   *  Search space in 2d space.
+   *  This variables define a box in 2D space.
    */
   ///@{
   std::optional<double> xStart = 0;
