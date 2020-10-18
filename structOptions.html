@@ -47,6 +47,7 @@
           Options <span class="m-thin">struct</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="run_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/app/run.hpp&gt;</a></div>
         </h1>
+        <p><a href="structOptions.html" class="m-doc">Options</a> struct.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -55,24 +56,24 @@
               <ul>
                 <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#search-space">Search space</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>A fluffy feline</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">enum <a href="#a75e5c75348fe08d0595201ffbe0b3698" class="m-doc">StopCriterion</a> { </span><span class="m-doc-wrap"><a href="#a75e5c75348fe08d0595201ffbe0b3698a42395b300468ddd48012fb13b652ec78" class="m-doc">min_std_dev</a>,
+            <dt id="a75e5c75348fe08d0595201ffbe0b3698">
+              <span class="m-doc-wrap-bumper">enum <a href="#a75e5c75348fe08d0595201ffbe0b3698" class="m-doc-self">StopCriterion</a> { </span><span class="m-doc-wrap"><a href="#a75e5c75348fe08d0595201ffbe0b3698a42395b300468ddd48012fb13b652ec78" class="m-doc">min_std_dev</a>,
               <a href="#a75e5c75348fe08d0595201ffbe0b3698a69aaf414ae963bf4e0fadbf0aceee46a" class="m-doc">num_iterations</a> }</span>
             </dt>
-            <dd></dd>
+            <dd>Available stop criteria.</dd>
             <dt id="adcb5997636b5269e399924544619efae">
               <span class="m-doc-wrap-bumper">enum <a href="#adcb5997636b5269e399924544619efae" class="m-doc-self">Method</a> { </span><span class="m-doc-wrap"><a href="#adcb5997636b5269e399924544619efaeaa93a9f0c5c48eebcdd6db6394cf61883" class="m-doc">nelder_mead</a>,
               <a href="#adcb5997636b5269e399924544619efaea7ddf32e17a6ac5ce04a8ecbf782ca509" class="m-doc">random</a> }</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Available methods.</dd>
             <dt id="a084874a363765c078308a5f9348be83b">
               <span class="m-doc-wrap-bumper">enum <a href="#a084874a363765c078308a5f9348be83b" class="m-doc-self">FunctionName</a> { </span><span class="m-doc-wrap"><a href="#a084874a363765c078308a5f9348be83ba34248a9bfcbd589d9b5fccb6a0ac6963" class="m-doc">sphere</a>,
               <a href="#a084874a363765c078308a5f9348be83ba15193e2fc17eb5b9b3a78c7c904ec3bd" class="m-doc">easom</a>,
@@ -80,7 +81,7 @@
               <a href="#a084874a363765c078308a5f9348be83baf86ee6e8a42e873c195ae1ec2712df13" class="m-doc">rastrigin</a>,
               <a href="#a084874a363765c078308a5f9348be83bad2adc5edf91167cecaaf067acd4561a0" class="m-doc">himmelblau</a> }</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Available functioncs.</dd>
           </dl>
         </section>
         <section id="pub-attribs">
@@ -90,18 +91,18 @@
               std::optional&lt;<a href="structOptions.html#a75e5c75348fe08d0595201ffbe0b3698" class="m-doc">StopCriterion</a>&gt; <a href="#a7d6a7e651a2128003bebadaaa012ab6a" class="m-doc-self">stop_criterion</a>
             </dt>
             <dd><span></span></dd>
-            <dt>
-              std::optional&lt;bool&gt; <a href="#a3ee9d434a0dd3c8d97adb0896244de75" class="m-doc">gui</a>
+            <dt id="a3ee9d434a0dd3c8d97adb0896244de75">
+              std::optional&lt;bool&gt; <a href="#a3ee9d434a0dd3c8d97adb0896244de75" class="m-doc-self">gui</a>
             </dt>
-            <dd></dd>
+            <dd>If set starts program in GUI mode.</dd>
             <dt id="a4c863fd763152c6a1a518316f883d7cb">
               std::optional&lt;size_t&gt; <a href="#a4c863fd763152c6a1a518316f883d7cb" class="m-doc-self">max_iterations</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Maximum number of iterations.</dd>
             <dt id="adfd797b0c424bfd549854737c53ee91a">
               std::optional&lt;double&gt; <a href="#adfd797b0c424bfd549854737c53ee91a" class="m-doc-self">explore_probability</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Probability of exploration in random search.</dd>
             <dt id="a6dca8da5a389ffe5f98b800581467e7f">
               std::optional&lt;double&gt; <a href="#a6dca8da5a389ffe5f98b800581467e7f" class="m-doc-self">eps</a>
             </dt>
@@ -118,6 +119,24 @@
               std::optional&lt;double&gt; <a href="#ab53886d8fdec976a7a556cae20a5248f" class="m-doc-self">initial_simplex_step</a>
             </dt>
             <dd><span></span></dd>
+            <dt id="aa4f041719add32b45c8d9720d43a29e4">
+              std::optional&lt;<a href="structOptions.html#adcb5997636b5269e399924544619efae" class="m-doc">Method</a>&gt; <a href="#aa4f041719add32b45c8d9720d43a29e4" class="m-doc-self">method</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0b4ab0670ee6b79b4e79a662b552673a">
+              std::optional&lt;<a href="structOptions.html#a084874a363765c078308a5f9348be83b" class="m-doc">FunctionName</a>&gt; <a href="#a0b4ab0670ee6b79b4e79a662b552673a" class="m-doc-self">function</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a63d7faa2b8b6dae06b2742e47e7559c0">
+              std::vector&lt;double&gt; <a href="#a63d7faa2b8b6dae06b2742e47e7559c0" class="m-doc-self">initial_point</a>
+            </dt>
+            <dd>Starting point of optimizations.</dd>
+          </dl>
+        </section>
+        <section id="search-space">
+          <h2><a href="#search-space">Search space</a></h2>
+<p>Search space in 2d space.</p>
+          <dl class="m-doc">
             <dt id="abb7ae081e8a414d8cfe5e03080afcb9a">
               std::optional&lt;double&gt; <a href="#abb7ae081e8a414d8cfe5e03080afcb9a" class="m-doc-self">xStart</a>
             </dt>
@@ -134,37 +153,7 @@
               std::optional&lt;double&gt; <a href="#aa077d5fc14b4886c681b676fc1fa2c02" class="m-doc-self">yEnd</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="aa4f041719add32b45c8d9720d43a29e4">
-              std::optional&lt;Method&gt; <a href="#aa4f041719add32b45c8d9720d43a29e4" class="m-doc-self">method</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a0b4ab0670ee6b79b4e79a662b552673a">
-              std::optional&lt;FunctionName&gt; <a href="#a0b4ab0670ee6b79b4e79a662b552673a" class="m-doc-self">function</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a63d7faa2b8b6dae06b2742e47e7559c0">
-              std::vector&lt;double&gt; <a href="#a63d7faa2b8b6dae06b2742e47e7559c0" class="m-doc-self">initial_point</a>
-            </dt>
-            <dd><span></span></dd>
           </dl>
-        </section>
-        <section>
-          <h2>Enum documentation</h2>
-          <section class="m-doc-details" id="a75e5c75348fe08d0595201ffbe0b3698"><div>
-            <h3>
-              enum Options::<wbr /><a href="#a75e5c75348fe08d0595201ffbe0b3698" class="m-doc-self">StopCriterion</a>
-            </h3>
-<p>A fluffy feline</p>
-          </div></section>
-        </section>
-        <section>
-          <h2>Variable documentation</h2>
-          <section class="m-doc-details" id="a3ee9d434a0dd3c8d97adb0896244de75"><div>
-            <h3>
-              std::optional&lt;bool&gt; Options::<wbr /><a href="#a3ee9d434a0dd3c8d97adb0896244de75" class="m-doc-self">gui</a>
-            </h3>
-<p>A fluffy feline</p>
-          </div></section>
         </section>
       </div>
     </div>
