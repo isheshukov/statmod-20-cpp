@@ -3,7 +3,32 @@ on:
   pull_request:
   push:
 jobs:
-  build:
+  build-win:
+    runs-on: windows-latest
+    steps:
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.14.0'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2017_64'
+        dir: '${{ github.workspace }}/example/'
+        install-deps: 'true'
+        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+        cached: 'false'
+        aqtversion: '==0.9.7'
+        py7zrversion: '==0.10.1'
+        extra: '--external 7z'
+    - run: git submodule update --init --recursive
+    - run: mkdir build
+    - run: cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+    - run: cd build && make
+    - uses: actions/upload-artifact@v2
+      with:
+        name: artifact
+        path: build/app/nelder-mead*
+  build-nix:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
