@@ -10,14 +10,14 @@
 #include <vector>
 
 /**
-  A fluffy feline
+  @brief Options struct
 */
 struct Options
 {
 public:
-/**
-  A fluffy feline
-*/
+  /**
+    @brief Available stop criteria
+  */
   enum class StopCriterion
   {
     min_std_dev,
@@ -25,21 +25,28 @@ public:
   };
   std::optional<StopCriterion> stop_criterion = StopCriterion::num_iterations;
 
-/**
-  A fluffy feline
-*/
-  std::optional<bool> gui = false;
-  std::optional<size_t> max_iterations = 100;
-  std::optional<double> explore_probability = 0.7;
+  std::optional<bool> gui = false; ///< If set starts program in GUI mode
+  std::optional<size_t> max_iterations = 100; ///< Maximum number of iterations.
+  std::optional<double> explore_probability =
+    0.7; ///< Probability of exploration in random search
   std::optional<double> eps = 1e-6;
   std::optional<double> delta = 1;
   std::optional<double> alpha = 0.5;
   std::optional<double> initial_simplex_step = 1.0;
+
+  /** @name Search space
+   *  Search space in 2d space.
+   */
+  ///@{
   std::optional<double> xStart = 0;
   std::optional<double> xEnd = 1.0;
   std::optional<double> yStart = 0;
   std::optional<double> yEnd = 1.0;
+  ///@}
 
+  /**
+    @brief Available methods
+  */
   enum class Method
   {
     nelder_mead,
@@ -47,6 +54,9 @@ public:
   };
   std::optional<Method> method = Method::nelder_mead;
 
+  /**
+    @brief Available functioncs
+  */
   enum class FunctionName
   {
     sphere,
@@ -57,9 +67,13 @@ public:
   };
   std::optional<FunctionName> function = FunctionName::sphere;
 
-  std::vector<double> initial_point = { 0, 0 };
+  std::vector<double> initial_point = {
+    0,
+    0
+  }; ///< Starting point of optimizations
 };
 
+/// \cond DO_NOT_DOCUMENT
 STRUCTOPT(Options,
           stop_criterion,
           gui,
@@ -76,33 +90,35 @@ STRUCTOPT(Options,
           method,
           function,
           initial_point);
+/// \end DO_NOT_DOCUMENT
 
-using namespace Eigen;
-
+/**
+  @brief Test functions for optimization
+*/
 static std::map<Options::FunctionName,
-                std::function<double(VectorXd)>,
+                std::function<double(Eigen::VectorXd)>,
                 std::less<>>
   functions = { { Options::FunctionName::sphere,
-                  [](VectorXd x) { return std::pow(x.norm(), 2); } },
+                  [](Eigen::VectorXd x) { return std::pow(x.norm(), 2); } },
                 { Options::FunctionName::easom,
-                  [](VectorXd x) {
+                  [](Eigen::VectorXd x) {
                     auto xx = x.array() - M_PI;
                     return (-cos(x[0]) * cos(x[1]) *
                             exp(-xx[0] * xx[0] - xx[1] * xx[1]));
                   } },
                 { Options::FunctionName::rosenbrock,
-                  [](VectorXd _x) {
+                  [](Eigen::VectorXd _x) {
                     auto n = _x.size();
                     auto x = _x.array().tail(n - 1);
                     auto y = _x.array().head(n - 1);
                     return (pow(1 - y, 2) + 100 * pow(x - y * y, 2)).sum();
                   } },
                 { Options::FunctionName::rastrigin,
-                  [](VectorXd x) {
+                  [](Eigen::VectorXd x) {
                     auto x2 = x.array().pow(2) - 10 * cos(2 * M_PI * x.array());
                     return 10 * x.size() + x2.sum();
                   } },
-                { Options::FunctionName::himmelblau, [](VectorXd _x) {
+                { Options::FunctionName::himmelblau, [](Eigen::VectorXd _x) {
                    auto x = _x[0];
                    auto y = _x[1];
                    return std::pow(x * x + y - 11, 2) +
@@ -110,6 +126,11 @@ static std::map<Options::FunctionName,
                  } } };
 
 namespace run {
+/**
+  @brief Optimizes function with given options
+  @param options Optimization options
+  @returns State of optimization after StopCriterion condition has been met
+*/
 Optimization::OptimizationState
 run(Options options);
 }
