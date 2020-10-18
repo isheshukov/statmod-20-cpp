@@ -9,14 +9,13 @@ clangStdenv.mkDerivation rec {
   nativeBuildInputs = [
     cmake
     pkg-config
-    doxygen
   ];
 
   buildInputs = [ 
     mesa
     mesa_glu
     clang 
-    qt514.full
+    qt514.qtbase
   ];
 
   installPhase = ''
