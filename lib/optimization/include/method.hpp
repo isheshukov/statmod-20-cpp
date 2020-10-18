@@ -8,7 +8,10 @@
 #include <numeric>
 #include <optimization_parameters.hpp>
 
-using namespace MyMath;
+/**
+ * @brief PairSecondCmp comparator
+ * Compares pairs by second field.
+ */
 
 template<class U, class V>
 struct PairSecondCmp
@@ -29,7 +32,7 @@ public:
     this->parameters = p;
   }
   virtual ~AbstractMethod(){};
-  virtual PointVal next() = 0;
+  virtual MyMath::PointVal next() = 0;
   std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
   std::shared_ptr<OptimizationParameters> parameters;
 };
@@ -38,14 +41,14 @@ class NelderMead : public AbstractMethod
 {
 public:
   NelderMead(std::shared_ptr<OptimizationParameters> p);
-  virtual PointVal next() override;
+  virtual MyMath::PointVal next() override;
 };
 
 class RandomSearch : public AbstractMethod
 {
 public:
   RandomSearch(std::shared_ptr<OptimizationParameters> p);
-  virtual PointVal next() override;
+  virtual MyMath::PointVal next() override;
 };
 
 }

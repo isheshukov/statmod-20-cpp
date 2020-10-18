@@ -7,19 +7,16 @@
 #include <memory>
 #include <vector>
 
-using namespace Eigen;
-
-using namespace MyMath;
 namespace Optimization {
 struct OptimizationParameters
 {
   virtual bool f() { return true; };
-  std::function<double(VectorXd)> function;
-  Box search_space;
-  VectorXd initial_point;
+  std::function<double(Eigen::VectorXd)> function;
+  MyMath::Box search_space;
+  Eigen::VectorXd initial_point;
   // size_t arg_dim = 1;
   double eps = 1e-6;
-  PointVal current_best;
+  MyMath::PointVal current_best;
 };
 
 struct NelderMeadOptimizationParameters : public OptimizationParameters
@@ -41,7 +38,7 @@ struct OptimizationState
 {
   size_t iteration_num = 0;
   size_t iteration_no_improv = std::numeric_limits<size_t>::max();
-  std::vector<PointVal> point_history;
+  std::vector<MyMath::PointVal> point_history;
   std::shared_ptr<OptimizationParameters> method_parameters;
 };
 

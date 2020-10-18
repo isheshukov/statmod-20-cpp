@@ -86,7 +86,8 @@ MainWindow::on_function_comboBox_currentIndexChanged(QString value)
   for (int xIndex = 0; xIndex < nx; ++xIndex) {
     for (int yIndex = 0; yIndex < ny; ++yIndex) {
       colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
-      double r = functions.at(functionOptions->value(value))(Vector2d(x, y));
+      double r =
+        functions.at(functionOptions->value(value))(Eigen::Vector2d(x, y));
       colorMap->data()->setCell(xIndex, yIndex, r);
     }
   }

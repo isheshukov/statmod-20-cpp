@@ -50,18 +50,19 @@ run::run(Options options)
     }
   }
 
-  VectorXd point =
-    VectorXd::Map(options.initial_point.data(), options.initial_point.size());
+  Eigen::VectorXd point = Eigen::VectorXd::Map(options.initial_point.data(),
+                                               options.initial_point.size());
 
   parameters->function = functions.at(options.function.value());
   parameters->initial_point = point;
-  parameters->current_best = createPointVal(point, parameters->function);
+  parameters->current_best =
+    MyMath::createPointVal(point, parameters->function);
   std::vector<std::pair<double, double>> search_space = {
     std::pair<double, double>(options.xStart.value(), options.xEnd.value()),
     std::pair<double, double>(options.yStart.value(), options.yEnd.value())
   };
   parameters->search_space =
-    (point.size() == 2) ? search_space : Box(point, 10);
+    (point.size() == 2) ? search_space : MyMath::Box(point, 10);
 
   std::unique_ptr<Optimization::Method::AbstractMethod> method;
 

@@ -1,8 +1,6 @@
 #include <Eigen/Dense>
 #include <stop_criterion.hpp>
 
-using namespace Eigen;
-
 bool
 Optimization::StopCriterion::PointDistance::check(
   const OptimizationState& p) const
@@ -40,7 +38,7 @@ bool
 Optimization::StopCriterion::MinStdDeviation::check(
   const OptimizationState& p) const
 {
-  VectorXd values;
+  Eigen::VectorXd values;
   auto pp = std::dynamic_pointer_cast<NelderMeadOptimizationParameters>(
     p.method_parameters);
   values.resize(pp->simplex.size());
