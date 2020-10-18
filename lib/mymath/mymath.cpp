@@ -44,12 +44,14 @@ MyMath::Box::measure() const
     .first;
 }
 
-const std::pair<double, double>& MyMath::Box::operator[](size_t n) const
+const std::pair<double, double>&
+MyMath::Box::operator[](size_t n) const
 {
   return this->m_points[n];
 }
 
-MyMath::Box MyMath::operator&(const MyMath::Box& a, const MyMath::Box& b)
+MyMath::Box
+MyMath::operator&(const MyMath::Box& a, const MyMath::Box& b)
 {
   assert(a.size() == b.size() && "Boxes dimensions must be equal");
   size_t size = a.size();
@@ -80,7 +82,8 @@ MyMath::operator<<(std::ostream& os, const MyMath::PointVal& x)
 }
 
 MyMath::PointVal
-MyMath::createPointVal(Eigen::VectorXd v, std::function<double(VectorXd)>& f)
+MyMath::createPointVal(Eigen::VectorXd v,
+                       std::function<double(Eigen::VectorXd)>& f)
 {
   return PointVal(v, f(v));
 }

@@ -9,9 +9,15 @@
 #include <structopt/app.hpp>
 #include <vector>
 
+/**
+  A fluffy feline
+*/
 struct Options
 {
 public:
+/**
+  A fluffy feline
+*/
   enum class StopCriterion
   {
     min_std_dev,
@@ -19,6 +25,9 @@ public:
   };
   std::optional<StopCriterion> stop_criterion = StopCriterion::num_iterations;
 
+/**
+  A fluffy feline
+*/
   std::optional<bool> gui = false;
   std::optional<size_t> max_iterations = 100;
   std::optional<double> explore_probability = 0.7;
