@@ -10,6 +10,10 @@ in
       clang-analyzer
       clang-tools
       valgrind
+      doxygen
+      python3Packages.jinja2
+      python3Packages.pygments
+      texlive.combined.scheme-full
     ];
 
     buildInputs = with pkgs; [
