@@ -19,8 +19,7 @@ clangStdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    mkdir -p $out
-    cp app/nelder-mead $out
+    mkdir -p $out/bin
+    cp app/nelder-mead $out/bin
   '';
-
 }
