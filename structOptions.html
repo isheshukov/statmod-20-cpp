@@ -56,6 +56,7 @@
               <ul>
                 <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#random-search-options">Random search options</a></li>
                 <li><a href="#search-space">Search space</a></li>
               </ul>
             </li>
@@ -99,20 +100,8 @@
               std::optional&lt;size_t&gt; <a href="#a4c863fd763152c6a1a518316f883d7cb" class="m-doc-self">max_iterations</a>
             </dt>
             <dd>Maximum number of iterations.</dd>
-            <dt id="adfd797b0c424bfd549854737c53ee91a">
-              std::optional&lt;double&gt; <a href="#adfd797b0c424bfd549854737c53ee91a" class="m-doc-self">explore_probability</a>
-            </dt>
-            <dd>Probability of exploration in random search.</dd>
             <dt id="a6dca8da5a389ffe5f98b800581467e7f">
               std::optional&lt;double&gt; <a href="#a6dca8da5a389ffe5f98b800581467e7f" class="m-doc-self">eps</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ab59189b5cee63fbdb7d2a7a369fbfd82">
-              std::optional&lt;double&gt; <a href="#ab59189b5cee63fbdb7d2a7a369fbfd82" class="m-doc-self">delta</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a4e5085ba36af4a8bb48a19ac88c86f9c">
-              std::optional&lt;double&gt; <a href="#a4e5085ba36af4a8bb48a19ac88c86f9c" class="m-doc-self">alpha</a>
             </dt>
             <dd><span></span></dd>
             <dt id="ab53886d8fdec976a7a556cae20a5248f">
@@ -133,9 +122,26 @@
             <dd>Starting point of optimizations.</dd>
           </dl>
         </section>
+        <section id="random-search-options">
+          <h2><a href="#random-search-options">Random search options</a></h2>
+          <dl class="m-doc">
+            <dt id="adfd797b0c424bfd549854737c53ee91a">
+              std::optional&lt;double&gt; <a href="#adfd797b0c424bfd549854737c53ee91a" class="m-doc-self">explore_probability</a>
+            </dt>
+            <dd>Probability of exploration in random search.</dd>
+            <dt id="ab59189b5cee63fbdb7d2a7a369fbfd82">
+              std::optional&lt;double&gt; <a href="#ab59189b5cee63fbdb7d2a7a369fbfd82" class="m-doc-self">delta</a>
+            </dt>
+            <dd>Initial ball radius.</dd>
+            <dt id="a4e5085ba36af4a8bb48a19ac88c86f9c">
+              std::optional&lt;double&gt; <a href="#a4e5085ba36af4a8bb48a19ac88c86f9c" class="m-doc-self">alpha</a>
+            </dt>
+            <dd>Radius shrink coefficient.</dd>
+          </dl>
+        </section>
         <section id="search-space">
           <h2><a href="#search-space">Search space</a></h2>
-<p>Search space in 2d space.</p>
+<p>This variables define a box in 2D space.</p>
           <dl class="m-doc">
             <dt id="abb7ae081e8a414d8cfe5e03080afcb9a">
               std::optional&lt;double&gt; <a href="#abb7ae081e8a414d8cfe5e03080afcb9a" class="m-doc-self">xStart</a>
