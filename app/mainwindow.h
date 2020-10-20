@@ -7,6 +7,14 @@
 #include <QString>
 #include <qcustomplot.h>
 
+/*! \mainpage Optimization Methods
+ *
+ * \section intro_sec Introduction
+ *
+ * WIP
+ *
+ */
+
 namespace Ui {
 class MainWindow;
 }
