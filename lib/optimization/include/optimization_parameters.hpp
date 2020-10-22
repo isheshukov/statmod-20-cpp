@@ -10,7 +10,7 @@
 namespace Optimization {
 struct OptimizationParameters
 {
-  virtual bool f() { return true; };
+  virtual ~OptimizationParameters() = default;
   std::function<double(Eigen::VectorXd)> function;
   MyMath::Box search_space;
   Eigen::VectorXd initial_point;
@@ -21,14 +21,14 @@ struct OptimizationParameters
 
 struct NelderMeadOptimizationParameters : public OptimizationParameters
 {
-  virtual bool f() override { return true; }
+  virtual ~NelderMeadOptimizationParameters() = default;
   std::vector<std::pair<Eigen::VectorXd, double>> simplex;
   double initial_simplex_step = 1.0;
 };
 
 struct RandomSearchOptimizationParameters : public OptimizationParameters
 {
-  virtual bool f() override { return true; }
+  virtual ~RandomSearchOptimizationParameters() = default;
   double p = 0.5;
   double delta = 1;
   double alpha = 0.5;
