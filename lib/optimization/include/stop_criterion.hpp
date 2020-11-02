@@ -1,41 +1,42 @@
 #pragma once
 
-#include "optimization_parameters.hpp"
 #include <memory>
 #include <variant>
+#include "method.hpp"
+#include "optimization_parameters.hpp"
 
 namespace Optimization {
 namespace StopCriterion {
 
-struct PointDistance
-{
-  bool check(const Optimization::OptimizationState& p) const;
+struct PointDistance {
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 };
 
-struct MaxIterations
-{
+struct MaxIterations {
   MaxIterations(unsigned int N);
-  bool check(const Optimization::OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   unsigned int m_N;
 };
 
-struct MaxIterationsSinceImprovement
-{
+struct MaxIterationsSinceImprovement {
   MaxIterationsSinceImprovement(unsigned int N);
-  bool check(const Optimization::OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   unsigned int m_N;
 };
 
-struct MinStdDeviation
-{
+struct MinStdDeviation {
   MinStdDeviation(double eps, unsigned int N);
-  bool check(const Optimization::OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   double m_eps;
   unsigned int m_N;
 };
@@ -45,5 +46,5 @@ using StopCriterionVariant = std::variant<PointDistance,
                                           MaxIterationsSinceImprovement,
                                           MinStdDeviation>;
 
-}
-}
+}  // namespace StopCriterion
+}  // namespace Optimization

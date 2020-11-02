@@ -14,11 +14,9 @@
  * Compares pairs by second field.
  */
 
-template<class U, class V>
-struct PairSecondCmp
-{
-  bool operator()(const std::pair<U, V>& a, const std::pair<U, V>& b)
-  {
+template <class U, class V>
+struct PairSecondCmp {
+  bool operator()(const std::pair<U, V>& a, const std::pair<U, V>& b) {
     return a.second < b.second;
   }
 };
@@ -26,27 +24,45 @@ struct PairSecondCmp
 namespace Optimization {
 namespace Method {
 
-class NelderMead
-{
-public:
+class NelderMead {
+ public:
   NelderMead() = default;
+  NelderMead(std::function<double(Eigen::VectorXd)> _function,
+             MyMath::Box _search_space,
+             Eigen::VectorXd _initial_point,
+             double _initial_simplex_step);
   MyMath::PointVal next();
-  void setParameters(const Optimization::Parameters::NelderMead& p);
-  Optimization::Parameters::NelderMead& getParameters() { return parameters; }
-  Optimization::Parameters::NelderMead parameters;
+
+  std::function<double(Eigen::VectorXd)> function;
+  MyMath::Box search_space;
+  Eigen::VectorXd initial_point;
+  MyMath::PointVal current_best;
+  std::vector<std::pair<Eigen::VectorXd, double>> simplex;
+  double initial_simplex_step = 1.0;
 };
 
-class RandomSearch
-{
-public:
+class RandomSearch {
+ public:
   RandomSearch() = default;
+  RandomSearch(std::function<double(Eigen::VectorXd)> _function,
+               MyMath::Box _search_space,
+               Eigen::VectorXd _initial_point,
+               double _p,
+               double _delta,
+               double _alpha);
+
   MyMath::PointVal next();
-  void setParameters(const Optimization::Parameters::RandomSearch& p);
-  Optimization::Parameters::RandomSearch& getParameters() { return parameters; }
-  Optimization::Parameters::RandomSearch parameters;
+
+  std::function<double(Eigen::VectorXd)> function;
+  MyMath::Box search_space;
+  Eigen::VectorXd initial_point;
+  MyMath::PointVal current_best;
+  double p = 0.5;
+  double delta = 1;
+  double alpha = 0.5;
 };
 
 using MethodVariant = std::variant<NelderMead, RandomSearch>;
 
-}
-}
+}  // namespace Method
+}  // namespace Optimization
