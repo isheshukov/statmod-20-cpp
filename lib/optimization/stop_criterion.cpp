@@ -46,7 +46,10 @@ Optimization::StopCriterion::MinStdDeviation::check(
       values[i] = x->simplex[i].second;
     }
   }
-  return (std::sqrt((values.array() - values.mean()).square().sum() /
-                    (values.size() - 1)) > m_eps) &&
-         (p.iteration_num < m_N);
+
+  auto mean = values.sum() / values.rows();
+  auto std = ((values.array() - mean).square().sum() / values.rows());
+
+  std::cout << std << std::endl;
+  return (std > this->m_eps) && (p.iteration_num < this->m_N);
 }
