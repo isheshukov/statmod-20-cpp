@@ -2,48 +2,48 @@
 
 #include "optimization_parameters.hpp"
 #include <memory>
+#include <variant>
 
 namespace Optimization {
 namespace StopCriterion {
 
-struct AbstractCriterion
+struct PointDistance
 {
-  virtual bool check(const OptimizationState& p) const = 0;
-  virtual ~AbstractCriterion() {}
+  bool check(const Optimization::OptimizationState& p) const;
 };
 
-struct PointDistance : public AbstractCriterion
-{
-  bool check(const OptimizationState& p) const;
-};
-
-struct MaxIterations : public AbstractCriterion
+struct MaxIterations
 {
   MaxIterations(unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::OptimizationState& p) const;
 
 private:
   unsigned int m_N;
 };
 
-struct MaxIterationsSinceImprovement : public AbstractCriterion
+struct MaxIterationsSinceImprovement
 {
   MaxIterationsSinceImprovement(unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::OptimizationState& p) const;
 
 private:
   unsigned int m_N;
 };
 
-struct MinStdDeviation : public AbstractCriterion
+struct MinStdDeviation
 {
   MinStdDeviation(double eps, unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::OptimizationState& p) const;
 
 private:
   double m_eps;
   unsigned int m_N;
 };
+
+using StopCriterionVariant = std::variant<PointDistance,
+                                          MaxIterations,
+                                          MaxIterationsSinceImprovement,
+                                          MinStdDeviation>;
 
 }
 }

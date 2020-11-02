@@ -10,12 +10,12 @@ using dpair = std::pair<double, double>;
 
 MyMath::Box::Box() {}
 
-MyMath::Box::Box(std::vector<dpair> p)
+MyMath::Box::Box(const std::vector<dpair>& p)
 {
   this->m_points = p;
 }
 
-MyMath::Box::Box(Eigen::VectorXd& center, double radius)
+MyMath::Box::Box(const Eigen::VectorXd& center, double radius)
 {
   std::vector<dpair> points(center.size());
   for (size_t i = 0; i < points.size(); ++i) {

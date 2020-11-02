@@ -5,7 +5,6 @@
 
 namespace Optimization {
 OptimizationState
-optimize(
-  std::unique_ptr<Optimization::Method::AbstractMethod> method,
-  std::unique_ptr<Optimization::StopCriterion::AbstractCriterion> criterion);
+optimize(Optimization::Method::MethodVariant& method,
+         Optimization::StopCriterion::StopCriterionVariant& criterion);
 }

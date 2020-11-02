@@ -134,6 +134,7 @@ MainWindow::on_plot_click(QMouseEvent* event)
   ss << "Result: (";
   ss << opt_result.point_history.back().first.transpose() << "), ";
   ss << "f = " << opt_result.point_history.back().second;
+  ss << ", #iterations = " << opt_result.iteration_num;
 
   auto status_text = QString::fromStdString(ss.str());
   ui->statusbar->showMessage(status_text);

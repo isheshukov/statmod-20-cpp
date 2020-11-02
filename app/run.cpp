@@ -6,74 +6,88 @@
 Optimization::OptimizationState
 run::run(Options options)
 {
-  std::unique_ptr<Optimization::StopCriterion::AbstractCriterion>
-    stop_criterion;
+  Optimization::StopCriterion::StopCriterionVariant stop_criterion;
 
   switch (options.stop_criterion.value()) {
 
     case Options::StopCriterion::min_std_dev:
-      stop_criterion =
-        std::make_unique<Optimization::StopCriterion::MinStdDeviation>(
-          options.eps.value(), options.max_iterations.value());
+      stop_criterion = Optimization::StopCriterion::MinStdDeviation(
+        options.eps.value(), options.max_iterations.value());
       break;
 
     case Options::StopCriterion::num_iterations:
-      stop_criterion =
-        std::make_unique<Optimization::StopCriterion::MaxIterations>(
-          options.max_iterations.value());
+      stop_criterion = Optimization::StopCriterion::MaxIterations(
+        options.max_iterations.value());
       break;
   }
 
-  std::shared_ptr<Optimization::OptimizationParameters> parameters;
-
-  switch (options.method.value()) {
-
-    case Options::Method::nelder_mead: {
-      parameters =
-        std::make_shared<Optimization::NelderMeadOptimizationParameters>();
-      auto pn = std::dynamic_pointer_cast<
-        Optimization::NelderMeadOptimizationParameters>(parameters);
-      pn->initial_simplex_step = options.initial_simplex_step.value();
-      break;
-    }
-
-    case Options::Method::random: {
-      parameters =
-        std::make_shared<Optimization::RandomSearchOptimizationParameters>();
-
-      auto pr = std::dynamic_pointer_cast<
-        Optimization::RandomSearchOptimizationParameters>(parameters);
-      pr->p = options.explore_probability.value();
-      pr->delta = options.delta.value();
-      pr->alpha = options.alpha.value();
-      break;
-    }
-  }
+  Optimization::Parameters::ParametersVariant parameters;
+  Optimization::Method::MethodVariant method;
 
   Eigen::VectorXd point = Eigen::VectorXd::Map(options.initial_point.data(),
                                                options.initial_point.size());
 
-  parameters->function = functions.at(options.function.value());
-  parameters->initial_point = point;
-  parameters->current_best =
-    MyMath::createPointVal(point, parameters->function);
   std::vector<std::pair<double, double>> search_space = {
     std::pair<double, double>(options.xStart.value(), options.xEnd.value()),
     std::pair<double, double>(options.yStart.value(), options.yEnd.value())
   };
-  parameters->search_space =
-    (point.size() == 2) ? search_space : MyMath::Box(point, 10);
 
-  std::unique_ptr<Optimization::Method::AbstractMethod> method;
+  /*
+  std::visit(
+    [&options, &point, &search_space](auto& x) {
+      x.function = functions.at(options.function.value());
+      x.initial_point = point;
+      x.current_best = MyMath::createPointVal(point, x.function);
+      x.search_space =
+        (point.size() == 2) ? search_space : MyMath::Box(point, 10);
+    },
+    parameters);
+    */
 
   switch (options.method.value()) {
-    case Options::Method::nelder_mead:
-      method = std::make_unique<Optimization::Method::NelderMead>(parameters);
+
+    case Options::Method::nelder_mead: {
+      parameters = Optimization::Parameters::NelderMead();
+      method = Optimization::Method::NelderMead();
+      if (auto p =
+            std::get_if<Optimization::Parameters::NelderMead>(&parameters))
+        if (auto m = std::get_if<Optimization::Method::NelderMead>(&method)) {
+          p->initial_simplex_step = options.initial_simplex_step.value();
+
+          p->function = functions.at(options.function.value());
+          p->initial_point = point;
+          p->current_best = MyMath::createPointVal(point, p->function);
+          p->search_space =
+            (point.size() == 2) ? search_space : MyMath::Box(point, 10);
+
+          m->setParameters(*p);
+        }
+
       break;
-    case Options::Method::random:
-      method = std::make_unique<Optimization::Method::RandomSearch>(parameters);
+    }
+
+    case Options::Method::random: {
+      parameters = Optimization::Parameters::RandomSearch();
+      method = Optimization::Method::RandomSearch();
+
+      if (auto p =
+            std::get_if<Optimization::Parameters::RandomSearch>(&parameters))
+        if (auto m = std::get_if<Optimization::Method::RandomSearch>(&method)) {
+          p->p = options.explore_probability.value();
+          p->delta = options.delta.value();
+          p->alpha = options.alpha.value();
+
+          p->function = functions.at(options.function.value());
+          p->initial_point = point;
+          p->current_best = MyMath::createPointVal(point, p->function);
+          p->search_space =
+            (point.size() == 2) ? search_space : MyMath::Box(point, 10);
+
+          m->setParameters(*p);
+        }
       break;
+    }
   }
 
-  return Optimization::optimize(std::move(method), std::move(stop_criterion));
+  return Optimization::optimize(method, stop_criterion);
 }

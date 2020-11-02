@@ -7,6 +7,7 @@
 #include <mymath.hpp>
 #include <numeric>
 #include <optimization_parameters.hpp>
+#include <variant>
 
 /**
  * @brief PairSecondCmp comparator
@@ -24,32 +25,28 @@ struct PairSecondCmp
 
 namespace Optimization {
 namespace Method {
-class AbstractMethod
+
+class NelderMead
 {
 public:
-  AbstractMethod(std::shared_ptr<OptimizationParameters> p)
-  {
-    this->parameters = p;
-  }
-  virtual ~AbstractMethod(){};
-  virtual MyMath::PointVal next() = 0;
-  std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
-  std::shared_ptr<OptimizationParameters> parameters;
+  NelderMead() = default;
+  MyMath::PointVal next();
+  void setParameters(const Optimization::Parameters::NelderMead& p);
+  Optimization::Parameters::NelderMead& getParameters() { return parameters; }
+  Optimization::Parameters::NelderMead parameters;
 };
 
-class NelderMead : public AbstractMethod
+class RandomSearch
 {
 public:
-  NelderMead(std::shared_ptr<OptimizationParameters> p);
-  virtual MyMath::PointVal next() override;
+  RandomSearch() = default;
+  MyMath::PointVal next();
+  void setParameters(const Optimization::Parameters::RandomSearch& p);
+  Optimization::Parameters::RandomSearch& getParameters() { return parameters; }
+  Optimization::Parameters::RandomSearch parameters;
 };
 
-class RandomSearch : public AbstractMethod
-{
-public:
-  RandomSearch(std::shared_ptr<OptimizationParameters> p);
-  virtual MyMath::PointVal next() override;
-};
+using MethodVariant = std::variant<NelderMead, RandomSearch>;
 
 }
 }

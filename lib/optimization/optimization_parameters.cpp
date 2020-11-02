@@ -12,7 +12,8 @@ operator<<(std::ostream& os, const Optimization::OptimizationState& p)
 }
 
 std::ostream&
-operator<<(std::ostream& os, const Optimization::OptimizationParameters& p)
+operator<<(std::ostream& os,
+           const Optimization::Parameters::ParametersVariant p)
 {
   return os << "()" << std::endl;
 }
