@@ -54,27 +54,27 @@
             <li>
               Reference
               <ul>
+                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
-                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classOptimization_1_1Method_1_1AbstractMethod.html" class="m-doc">AbstractMethod</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="a310d32e9d7a35c5840c5bc1b4441739d">
-              <span class="m-doc-wrap-bumper"><a href="#a310d32e9d7a35c5840c5bc1b4441739d" class="m-doc-self">RandomSearch</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a108dbf0b4644ae1bad04b3d9bbc1d4b4">
-              <span class="m-doc-wrap-bumper"><a href="#a108dbf0b4644ae1bad04b3d9bbc1d4b4" class="m-doc-self">RandomSearch</a>(</span><span class="m-doc-wrap">std::function&lt;double(Eigen::VectorXd)&gt; _function,
-              <a href="classMyMath_1_1Box.html" class="m-doc">MyMath::<wbr />Box</a> _search_space,
-              Eigen::VectorXd _initial_point,
-              double _p,
-              double _delta,
-              double _alpha)</span>
+            <dt id="a440c68baf8b83fe859da06b7fda4b0ed">
+              <span class="m-doc-wrap-bumper"><a href="#a440c68baf8b83fe859da06b7fda4b0ed" class="m-doc-self">RandomSearch</a>(</span><span class="m-doc-wrap">std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt; p)</span>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -82,41 +82,8 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="a6c5d653093ea3bd0d0c61bf94a2aec07">
-              <span class="m-doc-wrap-bumper">auto <a href="#a6c5d653093ea3bd0d0c61bf94a2aec07" class="m-doc-self">next</a>(</span><span class="m-doc-wrap">) -&gt; MyMath::PointVal</span>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-attribs">
-          <h2><a href="#pub-attribs">Public variables</a></h2>
-          <dl class="m-doc">
-            <dt id="af23be56115a95de501c3c2736b0cf531">
-              std::function&lt;double(Eigen::VectorXd)&gt; <a href="#af23be56115a95de501c3c2736b0cf531" class="m-doc-self">function</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a0495e43a8d901a10cab36802bb6e191a">
-              <a href="classMyMath_1_1Box.html" class="m-doc">MyMath::<wbr />Box</a> <a href="#a0495e43a8d901a10cab36802bb6e191a" class="m-doc-self">search_space</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a7a06cc102c550400e350eeabc0ee7137">
-              Eigen::VectorXd <a href="#a7a06cc102c550400e350eeabc0ee7137" class="m-doc-self">initial_point</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a2fb52aa234f9b1678a31d8b0c7ba7c62">
-              MyMath::PointVal <a href="#a2fb52aa234f9b1678a31d8b0c7ba7c62" class="m-doc-self">current_best</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ad6161b620372f4eed15f0c890f1a128f">
-              double <a href="#ad6161b620372f4eed15f0c890f1a128f" class="m-doc-self">p</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a298be20bb42368e46d0e42d95a4adccf">
-              double <a href="#a298be20bb42368e46d0e42d95a4adccf" class="m-doc-self">delta</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="af5258ea5b26da720b2eeee84ab3be81f">
-              double <a href="#af5258ea5b26da720b2eeee84ab3be81f" class="m-doc-self">alpha</a>
+            <dt id="a2ee10b2e2e62c15aede5ff5043ef9035">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ee10b2e2e62c15aede5ff5043ef9035" class="m-doc-self">next</a>(</span><span class="m-doc-wrap">) -&gt; MyMath::PointVal <span class="m-label m-flat m-warning">override</span></span>
             </dt>
             <dd><span></span></dd>
           </dl>

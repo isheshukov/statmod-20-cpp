@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Optimization::StopCriterion::MinStdDeviation struct | Optimization Methods</title>
+  <title>Optimization::OptimizationState struct | Optimization Methods</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,8 +44,8 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespaceOptimization_1_1StopCriterion.html">StopCriterion</a>::<wbr/></span>MinStdDeviation <span class="m-thin">struct</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="stop__criterion_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/lib/optimization/include/stop_criterion.hpp&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span>OptimizationState <span class="m-thin">struct</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="optimization__parameters_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/lib/optimization/include/optimization_parameters.hpp&gt;</a></div>
         </h1>
         <p><span></span></p>
         <div class="m-block m-default">
@@ -54,37 +54,28 @@
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
-                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
-                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt>
-              struct <a href="structOptimization_1_1StopCriterion_1_1AbstractCriterion.html" class="m-doc">AbstractCriterion</a>
+            <dt id="a9227e71fca780d83828d0bf043031f96">
+              size_t <a href="#a9227e71fca780d83828d0bf043031f96" class="m-doc-self">iteration_num</a>
             </dt>
             <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="typeless-methods">
-          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
-          <dl class="m-doc">
-            <dt id="abdf21fcdfac70d3ea41bf568411e2d0b">
-              <span class="m-doc-wrap-bumper"><a href="#abdf21fcdfac70d3ea41bf568411e2d0b" class="m-doc-self">MinStdDeviation</a>(</span><span class="m-doc-wrap">double eps,
-              unsigned int N)</span>
+            <dt id="a2b61c6fc6d5ad19bb197f229fb6a88fc">
+              size_t <a href="#a2b61c6fc6d5ad19bb197f229fb6a88fc" class="m-doc-self">iteration_no_improv</a>
             </dt>
             <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="pub-methods">
-          <h2><a href="#pub-methods">Public functions</a></h2>
-          <dl class="m-doc">
-            <dt id="ad5d202d35905f8fa65f9122cf887f6b2">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad5d202d35905f8fa65f9122cf887f6b2" class="m-doc-self">check</a>(</span><span class="m-doc-wrap">const <a href="structOptimization_1_1OptimizationState.html" class="m-doc">OptimizationState</a>&amp; p) const -&gt; bool <span class="m-label m-flat m-warning">virtual</span></span>
+            <dt id="af6667a11c3f1ffb3a8581033dd6edd26">
+              std::vector&lt;MyMath::PointVal&gt; <a href="#af6667a11c3f1ffb3a8581033dd6edd26" class="m-doc-self">point_history</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5686ea6697f9529b51e0160161ab2088">
+              std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt; <a href="#a5686ea6697f9529b51e0160161ab2088" class="m-doc-self">method_parameters</a>
             </dt>
             <dd><span></span></dd>
           </dl>

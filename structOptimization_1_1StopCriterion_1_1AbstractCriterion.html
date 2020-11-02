@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Optimization::StopCriterion::MinStdDeviation struct | Optimization Methods</title>
+  <title>Optimization::StopCriterion::AbstractCriterion struct | Optimization Methods</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespaceOptimization_1_1StopCriterion.html">StopCriterion</a>::<wbr/></span>MinStdDeviation <span class="m-thin">struct</span>
+          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespaceOptimization_1_1StopCriterion.html">StopCriterion</a>::<wbr/></span>AbstractCriterion <span class="m-thin">struct</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="stop__criterion_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/lib/optimization/include/stop_criterion.hpp&gt;</a></div>
         </h1>
         <p><span></span></p>
@@ -54,18 +54,30 @@
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#derived-classes">Derived classes</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
             <dt>
-              struct <a href="structOptimization_1_1StopCriterion_1_1AbstractCriterion.html" class="m-doc">AbstractCriterion</a>
+              struct <a href="structOptimization_1_1StopCriterion_1_1MaxIterations.html" class="m-doc">MaxIterations</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              struct <a href="structOptimization_1_1StopCriterion_1_1MaxIterationsSinceImprovement.html" class="m-doc">MaxIterationsSinceImprovement</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              struct <a href="structOptimization_1_1StopCriterion_1_1MinStdDeviation.html" class="m-doc">MinStdDeviation</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              struct <a href="structOptimization_1_1StopCriterion_1_1PointDistance.html" class="m-doc">PointDistance</a>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -73,9 +85,8 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="abdf21fcdfac70d3ea41bf568411e2d0b">
-              <span class="m-doc-wrap-bumper"><a href="#abdf21fcdfac70d3ea41bf568411e2d0b" class="m-doc-self">MinStdDeviation</a>(</span><span class="m-doc-wrap">double eps,
-              unsigned int N)</span>
+            <dt id="a35ed9eb27a008b1b9b2da5b7281eef90">
+              <span class="m-doc-wrap-bumper"><a href="#a35ed9eb27a008b1b9b2da5b7281eef90" class="m-doc-self">~AbstractCriterion</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">virtual</span></span>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -83,8 +94,8 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ad5d202d35905f8fa65f9122cf887f6b2">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad5d202d35905f8fa65f9122cf887f6b2" class="m-doc-self">check</a>(</span><span class="m-doc-wrap">const <a href="structOptimization_1_1OptimizationState.html" class="m-doc">OptimizationState</a>&amp; p) const -&gt; bool <span class="m-label m-flat m-warning">virtual</span></span>
+            <dt id="a069c9273c80d7b1116cd2ca30a455a86">
+              <span class="m-doc-wrap-bumper">auto <a href="#a069c9273c80d7b1116cd2ca30a455a86" class="m-doc-self">check</a>(</span><span class="m-doc-wrap">const <a href="structOptimization_1_1OptimizationState.html" class="m-doc">OptimizationState</a>&amp; p) const -&gt; bool <span class="m-label m-flat m-warning">pure virtual</span></span>
             </dt>
             <dd><span></span></dd>
           </dl>

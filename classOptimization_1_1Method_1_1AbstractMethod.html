@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Optimization::State struct | Optimization Methods</title>
+  <title>Optimization::Method::AbstractMethod class | Optimization Methods</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,8 +44,8 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span>State <span class="m-thin">struct</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="optimization__parameters_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/lib/optimization/include/optimization_parameters.hpp&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespaceOptimization.html">Optimization</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespaceOptimization_1_1Method.html">Method</a>::<wbr/></span>AbstractMethod <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="method_8hpp.html">&lt;/home/runner/work/statmod-20-cpp/statmod-20-cpp/lib/optimization/include/method.hpp&gt;</a></div>
         </h1>
         <p><span></span></p>
         <div class="m-block m-default">
@@ -54,24 +54,58 @@
             <li>
               Reference
               <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </div>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classOptimization_1_1Method_1_1NelderMead.html" class="m-doc">NelderMead</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              class <a href="classOptimization_1_1Method_1_1RandomSearch.html" class="m-doc">RandomSearch</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a03b3d09f34f7d1bb57e7be8237bb6a79">
+              <span class="m-doc-wrap-bumper"><a href="#a03b3d09f34f7d1bb57e7be8237bb6a79" class="m-doc-self">AbstractMethod</a>(</span><span class="m-doc-wrap">std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt; p)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ae7ab071b10c28502d24f0723eaa3fab3">
+              <span class="m-doc-wrap-bumper"><a href="#ae7ab071b10c28502d24f0723eaa3fab3" class="m-doc-self">~AbstractMethod</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="ae060eb1783b4b84c8729899bd27edc24">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae060eb1783b4b84c8729899bd27edc24" class="m-doc-self">next</a>(</span><span class="m-doc-wrap">) -&gt; MyMath::PointVal <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a180e447f82d569eafbb2a39bd80bf40c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a180e447f82d569eafbb2a39bd80bf40c" class="m-doc-self">getParameters</a>(</span><span class="m-doc-wrap">) -&gt; std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
         <section id="pub-attribs">
           <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt id="a80cb80247652c0cf930e59674d82781e">
-              size_t <a href="#a80cb80247652c0cf930e59674d82781e" class="m-doc-self">iteration_num</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="ab071d58eb960f74ffbd365dd92c0014e">
-              size_t <a href="#ab071d58eb960f74ffbd365dd92c0014e" class="m-doc-self">iteration_no_improv</a>
-            </dt>
-            <dd><span></span></dd>
-            <dt id="a43a83fc8fdcdbbf4558c0b4764c781d8">
-              std::vector&lt;MyMath::PointVal&gt; <a href="#a43a83fc8fdcdbbf4558c0b4764c781d8" class="m-doc-self">point_history</a>
+            <dt id="ab937cbb9336cc95507cf9f15f2e801f4">
+              std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt; <a href="#ab937cbb9336cc95507cf9f15f2e801f4" class="m-doc-self">parameters</a>
             </dt>
             <dd><span></span></dd>
           </dl>
