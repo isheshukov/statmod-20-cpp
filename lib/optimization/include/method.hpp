@@ -7,49 +7,62 @@
 #include <mymath.hpp>
 #include <numeric>
 #include <optimization_parameters.hpp>
+#include <variant>
 
 /**
  * @brief PairSecondCmp comparator
  * Compares pairs by second field.
  */
 
-template<class U, class V>
-struct PairSecondCmp
-{
-  bool operator()(const std::pair<U, V>& a, const std::pair<U, V>& b)
-  {
+template <class U, class V>
+struct PairSecondCmp {
+  bool operator()(const std::pair<U, V>& a, const std::pair<U, V>& b) {
     return a.second < b.second;
   }
 };
 
 namespace Optimization {
 namespace Method {
-class AbstractMethod
-{
-public:
-  AbstractMethod(std::shared_ptr<OptimizationParameters> p)
-  {
-    this->parameters = p;
-  }
-  virtual ~AbstractMethod(){};
-  virtual MyMath::PointVal next() = 0;
-  std::shared_ptr<OptimizationParameters> getParameters() { return parameters; }
-  std::shared_ptr<OptimizationParameters> parameters;
+
+class NelderMead {
+ public:
+  NelderMead() = default;
+  NelderMead(std::function<double(Eigen::VectorXd)> _function,
+             MyMath::Box _search_space,
+             Eigen::VectorXd _initial_point,
+             double _initial_simplex_step);
+  MyMath::PointVal next();
+
+  std::function<double(Eigen::VectorXd)> function;
+  MyMath::Box search_space;
+  Eigen::VectorXd initial_point;
+  MyMath::PointVal current_best;
+  std::vector<std::pair<Eigen::VectorXd, double>> simplex;
+  double initial_simplex_step = 1.0;
 };
 
-class NelderMead : public AbstractMethod
-{
-public:
-  NelderMead(std::shared_ptr<OptimizationParameters> p);
-  virtual MyMath::PointVal next() override;
+class RandomSearch {
+ public:
+  RandomSearch() = default;
+  RandomSearch(std::function<double(Eigen::VectorXd)> _function,
+               MyMath::Box _search_space,
+               Eigen::VectorXd _initial_point,
+               double _p,
+               double _delta,
+               double _alpha);
+
+  MyMath::PointVal next();
+
+  std::function<double(Eigen::VectorXd)> function;
+  MyMath::Box search_space;
+  Eigen::VectorXd initial_point;
+  MyMath::PointVal current_best;
+  double p = 0.5;
+  double delta = 1;
+  double alpha = 0.5;
 };
 
-class RandomSearch : public AbstractMethod
-{
-public:
-  RandomSearch(std::shared_ptr<OptimizationParameters> p);
-  virtual MyMath::PointVal next() override;
-};
+using MethodVariant = std::variant<NelderMead, RandomSearch>;
 
-}
-}
+}  // namespace Method
+}  // namespace Optimization

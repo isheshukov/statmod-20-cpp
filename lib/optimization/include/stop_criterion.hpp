@@ -1,49 +1,50 @@
 #pragma once
 
-#include "optimization_parameters.hpp"
 #include <memory>
+#include <variant>
+#include "method.hpp"
+#include "optimization_parameters.hpp"
 
 namespace Optimization {
 namespace StopCriterion {
 
-struct AbstractCriterion
-{
-  virtual bool check(const OptimizationState& p) const = 0;
-  virtual ~AbstractCriterion() {}
+struct PointDistance {
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 };
 
-struct PointDistance : public AbstractCriterion
-{
-  bool check(const OptimizationState& p) const;
-};
-
-struct MaxIterations : public AbstractCriterion
-{
+struct MaxIterations {
   MaxIterations(unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   unsigned int m_N;
 };
 
-struct MaxIterationsSinceImprovement : public AbstractCriterion
-{
+struct MaxIterationsSinceImprovement {
   MaxIterationsSinceImprovement(unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   unsigned int m_N;
 };
 
-struct MinStdDeviation : public AbstractCriterion
-{
+struct MinStdDeviation {
   MinStdDeviation(double eps, unsigned int N);
-  bool check(const OptimizationState& p) const;
+  bool check(const Optimization::State& p,
+             const Optimization::Method::MethodVariant& m) const;
 
-private:
+ private:
   double m_eps;
   unsigned int m_N;
 };
 
-}
-}
+using StopCriterionVariant = std::variant<PointDistance,
+                                          MaxIterations,
+                                          MaxIterationsSinceImprovement,
+                                          MinStdDeviation>;
+
+}  // namespace StopCriterion
+}  // namespace Optimization

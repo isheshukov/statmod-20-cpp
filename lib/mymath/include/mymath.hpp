@@ -18,8 +18,8 @@ class Box
 {
 public:
   Box();
-  Box(std::vector<std::pair<double, double>>);
-  Box(Eigen::VectorXd& center, double radius);
+  Box(const std::vector<std::pair<double, double>>&);
+  Box(const Eigen::VectorXd& center, double radius);
   size_t size() const;
   /**
    * @brief Measure function
