@@ -23,6 +23,8 @@ struct Options {
   std::optional<bool> gui = false;  ///< If set starts program in GUI mode
   std::optional<size_t> max_iterations =
       100;  ///< Maximum number of iterations.
+  std::optional<double> eps =
+      1e-6;  ///< Threshold for MinStdDeviation stop criterion
 
   /** @name Random search options
    */
@@ -33,8 +35,8 @@ struct Options {
   std::optional<double> alpha = 0.5;  ///< Radius shrink coefficient
   ///@}
 
-  std::optional<double> eps = 1e-6;
-  std::optional<double> initial_simplex_step = 1.0;
+  std::optional<double> initial_simplex_step =
+      1.0;  ///< Step which is used to create initial simplex
 
   /** @name Search space
    *  This variables define a box in 2D space.
