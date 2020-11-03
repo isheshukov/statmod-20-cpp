@@ -19,7 +19,6 @@ State optimize(Optimization::Method::MethodVariant& method,
     state.point_history.push_back(std::visit(getNext, method));
     state.iteration_num++;
     state.iteration_no_improv++;
-    state.point_history.push_back(state.method_parameters->current_best);
 
     if (state.point_history.back().second <
         (state.point_history.end() - 2)->second)
