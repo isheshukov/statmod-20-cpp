@@ -54,27 +54,25 @@
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classOptimization_1_1Method_1_1AbstractMethod.html" class="m-doc">AbstractMethod</a>
-            </dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="ac46e669877b822b290c38378e4b66772">
-              <span class="m-doc-wrap-bumper"><a href="#ac46e669877b822b290c38378e4b66772" class="m-doc-self">NelderMead</a>(</span><span class="m-doc-wrap">std::shared_ptr&lt;<a href="structOptimization_1_1OptimizationParameters.html" class="m-doc">OptimizationParameters</a>&gt; p)</span>
+            <dt id="ab17e95f5ede77947209854e6c09bae08">
+              <span class="m-doc-wrap-bumper"><a href="#ab17e95f5ede77947209854e6c09bae08" class="m-doc-self">NelderMead</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad87e4c3bba3f0e3f2808194c3986790a">
+              <span class="m-doc-wrap-bumper"><a href="#ad87e4c3bba3f0e3f2808194c3986790a" class="m-doc-self">NelderMead</a>(</span><span class="m-doc-wrap">std::function&lt;double(Eigen::VectorXd)&gt; _function,
+              <a href="classMyMath_1_1Box.html" class="m-doc">MyMath::<wbr />Box</a> _search_space,
+              Eigen::VectorXd _initial_point,
+              double _initial_simplex_step)</span>
             </dt>
             <dd><span></span></dd>
           </dl>
@@ -82,8 +80,37 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ac19198bd9182dfc083ea5e13315d8f99">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac19198bd9182dfc083ea5e13315d8f99" class="m-doc-self">next</a>(</span><span class="m-doc-wrap">) -&gt; MyMath::PointVal <span class="m-label m-flat m-warning">override</span></span>
+            <dt id="a519f9ebc341013592dfd46b7ede3b036">
+              <span class="m-doc-wrap-bumper">auto <a href="#a519f9ebc341013592dfd46b7ede3b036" class="m-doc-self">next</a>(</span><span class="m-doc-wrap">) -&gt; MyMath::PointVal</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="aee4d0c40422a3a2f52e34a99a42a0882">
+              std::function&lt;double(Eigen::VectorXd)&gt; <a href="#aee4d0c40422a3a2f52e34a99a42a0882" class="m-doc-self">function</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a532cc211b96a1489686cae0143efe0c3">
+              <a href="classMyMath_1_1Box.html" class="m-doc">MyMath::<wbr />Box</a> <a href="#a532cc211b96a1489686cae0143efe0c3" class="m-doc-self">search_space</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab148c06d04ce683bdbaea1f7fe86b09f">
+              Eigen::VectorXd <a href="#ab148c06d04ce683bdbaea1f7fe86b09f" class="m-doc-self">initial_point</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="acac2b6b3b39ce96b9219de13e47a4d52">
+              MyMath::PointVal <a href="#acac2b6b3b39ce96b9219de13e47a4d52" class="m-doc-self">current_best</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ad069e6915352101c84ace500b81c2444">
+              std::vector&lt;std::pair&lt;Eigen::VectorXd, double&gt;&gt; <a href="#ad069e6915352101c84ace500b81c2444" class="m-doc-self">simplex</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a8f0cafd60d14a00a0352070973f83761">
+              double <a href="#a8f0cafd60d14a00a0352070973f83761" class="m-doc-self">initial_simplex_step</a>
             </dt>
             <dd><span></span></dd>
           </dl>
