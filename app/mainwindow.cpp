@@ -1,10 +1,12 @@
 #include "mainwindow.h"
-#include <exception>
 #include "run.hpp"
 #include "ui_mainwindow.h"
+#include <exception>
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+{
   ui->setupUi(this);
   methodOptions = new QMap<QString, Options::Method>;
   functionOptions = new QMap<QString, Options::FunctionName>;
@@ -43,8 +45,8 @@ MainWindow::MainWindow(QWidget* parent)
   ui->plot->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, marginGroup);
   colorScale->setMarginGroup(QCP::msBottom | QCP::msTop, marginGroup);
 
-  QObject::connect(ui->plot, &QCustomPlot::mousePress, this,
-                   &MainWindow::on_plot_click);
+  QObject::connect(
+    ui->plot, &QCustomPlot::mousePress, this, &MainWindow::on_plot_click);
 
   ui->plot->addLayer("points", ui->plot->layer("main"), QCustomPlot::limAbove);
   ui->plot->layer("points")->setMode(QCPLayer::lmBuffered);
@@ -58,17 +60,22 @@ MainWindow::MainWindow(QWidget* parent)
   ui->function_comboBox->addItems(QStringList(functionOptions->keys()));
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
   delete ui;
   delete methodOptions;
   delete functionOptions;
 }
 
-void MainWindow::on_actionExit_triggered() {
+void
+MainWindow::on_actionExit_triggered()
+{
   QApplication::quit();
 }
 
-void MainWindow::on_function_comboBox_currentIndexChanged(QString value) {
+void
+MainWindow::on_function_comboBox_currentIndexChanged(QString value)
+{
   ui->plot->setCurrentLayer("points");
   ui->plot->graph(0)->data().data()->clear();
 
@@ -80,7 +87,7 @@ void MainWindow::on_function_comboBox_currentIndexChanged(QString value) {
     for (int yIndex = 0; yIndex < ny; ++yIndex) {
       colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
       double r =
-          functions.at(functionOptions->value(value))(Eigen::Vector2d(x, y));
+        functions.at(functionOptions->value(value))(Eigen::Vector2d(x, y));
       colorMap->data()->setCell(xIndex, yIndex, r);
     }
   }
@@ -92,7 +99,12 @@ void MainWindow::on_function_comboBox_currentIndexChanged(QString value) {
   ui->plot->replot();
 }
 
-void MainWindow::on_plot_click(QMouseEvent* event) {
+void
+MainWindow::on_plot_click(QMouseEvent* event)
+{
+  if (!ui->plot->axisRect()->rect().contains(event->pos()))
+    return;
+
   double x = colorMap->keyAxis()->pixelToCoord(event->pos().x());
   double y = colorMap->valueAxis()->pixelToCoord(event->pos().y());
 
@@ -100,9 +112,9 @@ void MainWindow::on_plot_click(QMouseEvent* event) {
   opts.method = methodOptions->value(ui->method_comboBox->currentText());
   opts.function = functionOptions->value(ui->function_comboBox->currentText());
   opts.stop_criterion =
-      stopCriterionOptions->value(ui->stopCriterion_comboBox->currentText());
+    stopCriterionOptions->value(ui->stopCriterion_comboBox->currentText());
 
-  opts.initial_point = {x, y};
+  opts.initial_point = { x, y };
   opts.max_iterations = ui->maxIterations_spinBox->value();
   opts.eps = ui->eps_doubleSpinBox->value();
   opts.explore_probability = ui->p_doubleSpinBox->value();
@@ -133,8 +145,9 @@ void MainWindow::on_plot_click(QMouseEvent* event) {
   ui->plot->replot();
 }
 
-void MainWindow::on_stopCriterion_comboBox_currentIndexChanged(
-    const QString& arg1) {
+void
+MainWindow::on_stopCriterion_comboBox_currentIndexChanged(const QString& arg1)
+{
   if (arg1.compare("Maximum iterations") == 0) {
     ui->eps_doubleSpinBox->setEnabled(false);
   } else {
@@ -145,10 +158,12 @@ void MainWindow::on_stopCriterion_comboBox_currentIndexChanged(
   ui->plot->blockSignals(false);
 }
 
-void MainWindow::on_method_comboBox_currentIndexChanged(const QString& arg1) {
+void
+MainWindow::on_method_comboBox_currentIndexChanged(const QString& arg1)
+{
   ui->stopCriterion_comboBox->clear();
   ui->stopCriterion_comboBox->addItems(
-      QStringList(stopCriterionOptions->keys()));
+    QStringList(stopCriterionOptions->keys()));
   ui->simplexInitStep_doubleSpinBox->show();
   ui->alpha_doubleSpinBox->show();
   ui->delta_doubleSpinBox->show();
@@ -160,7 +175,7 @@ void MainWindow::on_method_comboBox_currentIndexChanged(const QString& arg1) {
 
   if (arg1.compare("Random search") == 0) {
     ui->stopCriterion_comboBox->removeItem(
-        ui->stopCriterion_comboBox->findText("Minimum standard deviation"));
+      ui->stopCriterion_comboBox->findText("Minimum standard deviation"));
     ui->simplexInitStep_doubleSpinBox->hide();
     ui->label_6->hide();
   }

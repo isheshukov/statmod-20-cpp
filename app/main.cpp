@@ -1,14 +1,16 @@
+#include "mainwindow.h"
 #include <QApplication>
 #include <QtWidgets>
 #include <iostream>
 #include <run.hpp>
 #include <structopt/app.hpp>
-#include "mainwindow.h"
 
-int main(int argc, char* argv[]) {
+int
+main(int argc, char* argv[])
+{
   try {
     auto options =
-        structopt::app("optimization_methods").parse<Options>(argc, argv);
+      structopt::app("optimization_methods").parse<Options>(argc, argv);
 
     if (((options.function == Options::FunctionName::easom) ||
          (options.function == Options::FunctionName::himmelblau)) &&
@@ -25,7 +27,7 @@ int main(int argc, char* argv[]) {
       MainWindow window;
       window.show();
       window.setWindowTitle(QApplication::translate(
-          "toplevel", "C++ Multidimensional optimization"));
+        "toplevel", "C++ Multidimensional optimization"));
       return a.exec();
     }
   } catch (structopt::exception& e) {
