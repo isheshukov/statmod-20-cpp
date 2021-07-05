@@ -46,44 +46,44 @@
         <h1>
           Optimization Methods
         </h1>
-<img class="m-image" src="screen.png" alt="Image" /><section id="Compilation"><h2><a href="#Compilation">Compilation</a></h2><pre class="m-code"><span class="n">git</span> <span class="n">clone</span> <span class="o">--</span><span class="n">recurse</span><span class="o">-</span><span class="n">submodules</span> <span class="nl">https</span><span class="p">:</span><span class="c1">//github.com/isheshukov/statmod-20-cpp.git</span>
-<span class="n">mkdir</span> <span class="n">statmod</span><span class="o">-</span><span class="mi">20</span><span class="o">-</span><span class="n">cpp</span><span class="o">/</span><span class="n">build</span>
-<span class="n">cd</span> <span class="n">statmod</span><span class="o">-</span><span class="mi">20</span><span class="o">-</span><span class="n">cpp</span><span class="o">/</span><span class="n">build</span>
-<span class="n">cmake</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Release</span> <span class="p">..</span>
-<span class="n">make</span>
-<span class="p">.</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">nelder</span><span class="o">-</span><span class="n">mead</span></pre></section><section id="Usage"><h2><a href="#Usage">Usage</a></h2><pre class="m-code"><span class="nl">USAGE</span><span class="p">:</span> <span class="n">optimization_methods</span> <span class="p">[</span><span class="n">FLAGS</span><span class="p">]</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span> <span class="n">initial_point</span>
+<img class="m-image" src="screen.png" alt="Image" /><section id="Compilation"><h2><a href="#Compilation">Compilation</a></h2><pre class="m-code">git clone --recurse-submodules https://github.com/isheshukov/statmod-20-cpp.git
+mkdir statmod-20-cpp/build
+<span class="nb">cd</span> statmod-20-cpp/build
+cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release ..
+make
+./app/nelder-mead</pre></section><section id="Usage"><h2><a href="#Usage">Usage</a></h2><pre class="m-code">USAGE: optimization_methods <span class="o">[</span>FLAGS<span class="o">]</span> <span class="o">[</span>OPTIONS<span class="o">]</span> initial_point
 
-<span class="nl">FLAGS</span><span class="p">:</span>
-    <span class="o">-</span><span class="n">g</span><span class="p">,</span> <span class="o">--</span><span class="n">gui</span>  <span class="n">Start</span> <span class="n">in</span> <span class="n">GUI</span> <span class="n">mode</span>
+FLAGS:
+    -g, --gui  Start in GUI mode
 
-<span class="nl">OPTIONS</span><span class="p">:</span>
-    <span class="o">-</span><span class="n">m</span><span class="p">,</span> <span class="o">--</span><span class="n">method</span> <span class="o">&lt;</span><span class="n">method</span><span class="o">&gt;</span> <span class="p">...</span> <span class="n">nelder_mead</span><span class="p">,</span> <span class="n">random</span>
-    <span class="o">-</span><span class="n">f</span><span class="p">,</span> <span class="o">--</span><span class="n">function</span> <span class="o">&lt;</span><span class="n">function</span><span class="o">&gt;</span> <span class="p">...</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">easom</span><span class="p">,</span> <span class="n">rosenbrock</span><span class="p">,</span> <span class="n">rastrigin</span><span class="p">,</span>
-<span class="n">himmelblau</span>
+OPTIONS:
+    -m, --method &lt;method&gt; ... nelder_mead, random
+    -f, --function &lt;<span class="k">function</span>&gt; ... sphere, easom, rosenbrock, rastrigin,
+himmelblau
 
-    <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="o">--</span><span class="n">stop</span><span class="o">-</span><span class="n">criterion</span> <span class="o">&lt;</span><span class="n">stop_criterion</span><span class="o">&gt;</span> <span class="p">...</span> <span class="n">min_std_dev</span><span class="p">,</span> <span class="n">num_iterations</span>
-    <span class="o">-</span><span class="n">m</span><span class="p">,</span> <span class="o">--</span><span class="n">max</span><span class="o">-</span><span class="n">iterations</span> <span class="o">&lt;</span><span class="n">max_iterations</span><span class="o">&gt;</span> <span class="p">...</span> <span class="k">for</span> <span class="n">min_std_dev</span> <span class="n">and</span> <span class="n">num_iterations</span>
-     <span class="o">-</span><span class="n">e</span><span class="p">,</span> <span class="o">--</span><span class="n">eps</span> <span class="o">&lt;</span><span class="n">eps</span><span class="o">&gt;</span> <span class="p">...</span> <span class="k">for</span> <span class="n">min_std_dev</span>
+    -s, --stop-criterion &lt;stop_criterion&gt; ... min_std_dev, num_iterations
+    -m, --max-iterations &lt;max_iterations&gt; ... <span class="k">for</span> min_std_dev and num_iterations
+     -e, --eps &lt;eps&gt; ... <span class="k">for</span> min_std_dev
 
- <span class="n">NELDER</span><span class="o">-</span><span class="n">MEAD</span> <span class="nl">OPTIONS</span><span class="p">:</span>
-     <span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="o">--</span><span class="n">initial</span><span class="o">-</span><span class="n">simplex_step</span> <span class="o">&lt;</span><span class="n">initial_simplex_step</span><span class="o">&gt;</span>
+ NELDER-MEAD OPTIONS:
+     -i, --initial-simplex_step &lt;initial_simplex_step&gt;
 
- <span class="n">RANDOM</span> <span class="n">SEARCH</span> <span class="nl">OPTIONS</span><span class="p">:</span>
-     <span class="o">-</span><span class="n">e</span><span class="p">,</span> <span class="o">--</span><span class="n">explore</span><span class="o">-</span><span class="n">probability</span> <span class="o">&lt;</span><span class="n">explore_probability</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">d</span><span class="p">,</span> <span class="o">--</span><span class="n">delta</span> <span class="o">&lt;</span><span class="n">delta</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="o">--</span><span class="n">alpha</span> <span class="o">&lt;</span><span class="n">alpha</span><span class="o">&gt;</span>
+ RANDOM SEARCH OPTIONS:
+     -e, --explore-probability &lt;explore_probability&gt;
+     -d, --delta &lt;delta&gt;
+     -a, --alpha &lt;alpha&gt;
 
- <span class="n">SEARCH</span> <span class="n">SPACE</span> <span class="n">OPTIONS</span> <span class="p">(</span><span class="mi">2</span><span class="n">D</span> <span class="n">only</span><span class="p">)</span><span class="o">:</span>
-     <span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="o">--</span><span class="n">xStart</span> <span class="o">&lt;</span><span class="n">xStart</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="o">--</span><span class="n">xEnd</span> <span class="o">&lt;</span><span class="n">xEnd</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="o">--</span><span class="n">yStart</span> <span class="o">&lt;</span><span class="n">yStart</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="o">--</span><span class="n">yEnd</span> <span class="o">&lt;</span><span class="n">yEnd</span><span class="o">&gt;</span>
+ SEARCH SPACE OPTIONS <span class="o">(</span>2D only<span class="o">)</span>:
+     -x, --xStart &lt;xStart&gt;
+     -x, --xEnd &lt;xEnd&gt;
+     -y, --yStart &lt;yStart&gt;
+     -y, --yEnd &lt;yEnd&gt;
 
-     <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span> <span class="o">&lt;</span><span class="n">help</span><span class="o">&gt;</span>
-     <span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
+     -h, --help &lt;help&gt;
+     -v, --version &lt;version&gt;
 
- <span class="nl">ARGS</span><span class="p">:</span>
-     <span class="n">initial_point</span> <span class="p">...</span> <span class="n">Initial</span> <span class="n">point</span> <span class="n">of</span> <span class="n">optimization</span></pre></section>
+ ARGS:
+     initial_point ... Initial point of optimization</pre></section>
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Optimization Methods. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Optimization Methods. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
