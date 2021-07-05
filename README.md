@@ -1,5 +1,9 @@
 # Optimization Methods
 
+![](docs/screen.png)
+
+A C++ program for multidimensional optimization using Nelder-Mead algorithm and random search.
+
 [Documentation](https://isheshukov.github.io/statmod-20-cpp/index.html)
 
 ## Compilation
